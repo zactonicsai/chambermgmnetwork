@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Montgomery Chamber of Commerce — Member Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ivory: '#FAF7F2',
+        parchment: '#F0EBE1',
+        gold: { 50:'#FFF9E6', 100:'#FFF0B8', 200:'#FFE078', 300:'#D4A843', 400:'#B8912E', 500:'#9A7520', 600:'#7A5C18', 700:'#5C4512' },
+        navy: { 50:'#E8EDF5', 100:'#C5D0E8', 200:'#8FA3CC', 300:'#5A76B0', 400:'#3A5A96', 500:'#1E3A6E', 600:'#162D56', 700:'#0F1F3D' },
+        clay: { 50:'#FBF0EB', 100:'#F2D5C7', 200:'#E0A88B', 300:'#C67D56', 400:'#A8603A', 500:'#8B4726' },
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        body: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #FAF7F2; color: #0F1F3D; }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 9999;
+  }
+
+  /* Animations */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes slideRight { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  @keyframes countUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+  .animate-fade-up { animation: fadeUp 0.7s ease-out both; }
+  .animate-fade-in { animation: fadeIn 0.5s ease-out both; }
+  .animate-slide-right { animation: slideRight 0.8s ease-out both; transform-origin: left; }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+  .stagger-6 { animation-delay: 0.6s; }
+
+  /* Progress rings */
+  .progress-ring-bg { stroke: #E8EDF5; }
+  .progress-ring-fill { transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+  /* Cards */
+  .benefit-card {
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    border: 1px solid rgba(30,58,110,0.08);
+  }
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(30,58,110,0.12), 0 0 0 1px rgba(212,168,67,0.2);
+    border-color: rgba(212,168,67,0.3);
+  }
+
+  .event-row {
+    transition: all 0.25s ease;
+    border-left: 3px solid transparent;
+  }
+  .event-row:hover {
+    background: rgba(30,58,110,0.03);
+    border-left-color: #D4A843;
+    padding-left: 20px;
+  }
+
+  /* Tab system */
+  .tab-btn { position: relative; transition: color 0.3s; }
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #D4A843;
+    transform: scaleX(0);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .tab-btn.active { color: #1E3A6E; }
+  .tab-btn.active::after { transform: scaleX(1); }
+
+  /* Checklist */
+  .check-item { transition: all 0.3s; }
+  .check-item.completed { opacity: 0.5; }
+  .check-item.completed .check-text { text-decoration: line-through; }
+
+  /* Tooltip */
+  .tooltip-trigger { position: relative; }
+  .tooltip-trigger .tooltip-content {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    z-index: 50;
+  }
+  .tooltip-trigger:hover .tooltip-content {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(30,58,110,0.15); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(30,58,110,0.25); }
+
+  /* Search */
+  .search-glow:focus {
+    box-shadow: 0 0 0 3px rgba(212,168,67,0.2), 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    backdrop-filter: blur(4px);
+    background: rgba(15,31,61,0.4);
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- NAVIGATION -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-ivory/90 backdrop-blur-md border-b border-navy-50">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-navy-500 flex items-center justify-center">
+        <span class="text-gold-300 font-display font-bold text-sm">MC</span>
+      </div>
+      <div>
+        <div class="font-display font-bold text-navy-700 text-sm tracking-wide leading-none">MONTGOMERY</div>
+        <div class="text-[10px] tracking-[0.2em] text-navy-300 uppercase font-medium">Chamber of Commerce</div>
+      </div>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <button onclick="scrollToSection('benefits')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Benefits</button>
+      <button onclick="scrollToSection('events')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Events</button>
+      <button onclick="scrollToSection('directory')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Directory</button>
+      <button onclick="scrollToSection('resources')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Resources</button>
+      <button onclick="scrollToSection('checklist')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Get Started</button>
+    </div>
+    <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-parchment transition-colors">
+      <svg id="menuIcon" class="w-5 h-5 text-navy-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-ivory border-t border-navy-50 px-6 py-4 space-y-3">
+    <button onclick="scrollToSection('benefits');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Benefits</button>
+    <button onclick="scrollToSection('events');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Events</button>
+    <button onclick="scrollToSection('directory');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Directory</button>
+    <button onclick="scrollToSection('resources');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Resources</button>
+    <button onclick="scrollToSection('checklist');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Get Started</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-32 pb-20 px-6 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(45deg, #1E3A6E 0, #1E3A6E 1px, transparent 0, transparent 50%); background-size: 28px 28px;"></div>
+  <div class="max-w-7xl mx-auto relative">
+    <div class="max-w-3xl">
+      <p class="animate-fade-up text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-4">Member Dashboard</p>
+      <h1 class="animate-fade-up stagger-1 font-display text-5xl md:text-6xl lg:text-7xl font-900 text-navy-700 leading-[1.05] mb-6">
+        Unlock the <em class="text-gold-300 not-italic">full power</em> of your membership.
+      </h1>
+      <p class="animate-fade-up stagger-2 text-lg text-navy-300 max-w-xl leading-relaxed mb-8">
+        Your Montgomery Chamber membership is more than a plaque on the wall. Explore every benefit, track your engagement, and connect with the business community.
+      </p>
+      <div class="animate-fade-up stagger-3 flex flex-wrap gap-3">
+        <button onclick="scrollToSection('checklist')" class="px-6 py-3 bg-navy-500 text-ivory rounded-lg font-semibold text-sm hover:bg-navy-600 transition-colors shadow-lg shadow-navy-500/20">
+          Start Your Checklist →
+        </button>
+        <button onclick="scrollToSection('benefits')" class="px-6 py-3 bg-ivory text-navy-500 border border-navy-100 rounded-lg font-semibold text-sm hover:border-gold-300 hover:text-gold-600 transition-all">
+          Explore Benefits
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="animate-fade-up stagger-4 mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
+        <div class="font-mono text-3xl font-bold text-navy-600 count-up" data-target="2200">0</div>
+        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">Member Businesses</div>
+      </div>
+      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
+        <div class="font-mono text-3xl font-bold text-navy-600 count-up" data-target="150">0</div>
+        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">Annual Events</div>
+      </div>
+      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
+        <div class="font-mono text-3xl font-bold text-gold-400 count-up" data-target="45">0</div>
+        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">Exclusive Discounts</div>
+      </div>
+      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
+        <div class="font-mono text-3xl font-bold text-navy-600 count-up" data-target="98">0</div>
+        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">% Recommend</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MEMBERSHIP VALUE TRACKER -->
+<section class="py-16 px-6 bg-white border-y border-navy-50">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
+      <div>
+        <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Value Tracker</p>
+        <h2 class="font-display text-3xl font-bold text-navy-700">Your Membership ROI</h2>
+        <p class="text-navy-300 text-sm mt-2 max-w-md">See how much value you're getting. Click benefits you've used to track your personal ROI.</p>
+      </div>
+      <div class="mt-4 md:mt-0 text-right">
+        <div class="text-xs text-navy-300 uppercase tracking-wide">Estimated Value Used</div>
+        <div id="totalValue" class="font-mono text-4xl font-bold text-gold-400">$0</div>
+      </div>
+    </div>
+
+    <div id="roiGrid" class="grid md:grid-cols-3 gap-3"></div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits" class="py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Membership Benefits</p>
+      <h2 class="font-display text-4xl font-bold text-navy-700">Everything Included</h2>
+      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Your annual membership unlocks a comprehensive suite of tools, connections, and resources to grow your business in Montgomery.</p>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="flex justify-center gap-6 mb-10 flex-wrap">
+      <button class="tab-btn active text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('all', this)">All Benefits</button>
+      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('networking', this)">Networking</button>
+      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('marketing', this)">Marketing</button>
+      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('savings', this)">Savings</button>
+      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('advocacy', this)">Advocacy</button>
+    </div>
+
+    <div id="benefitsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events" class="py-20 px-6 bg-navy-700 text-ivory relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 20% 80%, #D4A843 0%, transparent 50%), radial-gradient(circle at 80% 20%, #D4A843 0%, transparent 50%);"></div>
+  <div class="max-w-7xl mx-auto relative">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+      <div>
+        <p class="text-gold-300 font-mono text-xs tracking-[0.25em] uppercase mb-2">Upcoming Events</p>
+        <h2 class="font-display text-4xl font-bold">Don't Miss Out</h2>
+        <p class="text-navy-200 mt-2 max-w-md text-sm">Your membership includes access to all of these events. Some are free, others are at a member-only discounted rate.</p>
+      </div>
+      <div class="mt-4 md:mt-0 flex gap-2">
+        <button onclick="filterEvents('all')" class="event-filter active px-4 py-2 rounded-lg text-xs font-semibold bg-white/10 text-ivory hover:bg-white/20 transition-colors">All</button>
+        <button onclick="filterEvents('free')" class="event-filter px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 text-navy-200 hover:bg-white/10 transition-colors">Free</button>
+        <button onclick="filterEvents('networking')" class="event-filter px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 text-navy-200 hover:bg-white/10 transition-colors">Networking</button>
+        <button onclick="filterEvents('workshop')" class="event-filter px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 text-navy-200 hover:bg-white/10 transition-colors">Workshops</button>
+      </div>
+    </div>
+
+    <div id="eventsList" class="space-y-2"></div>
+  </div>
+</section>
+
+<!-- DIRECTORY SEARCH -->
+<section id="directory" class="py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Member Directory</p>
+      <h2 class="font-display text-4xl font-bold text-navy-700">Find Fellow Members</h2>
+      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Search the directory to connect with other Montgomery businesses. Support local, hire local, partner local.</p>
+    </div>
+
+    <div class="max-w-2xl mx-auto mb-8">
+      <div class="relative">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="directorySearch" placeholder="Search by name, industry, or keyword…" class="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-navy-50 text-navy-600 placeholder:text-navy-200 focus:outline-none search-glow font-body text-sm" oninput="searchDirectory(this.value)">
+      </div>
+      <div class="flex gap-2 mt-3 flex-wrap">
+        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Restaurant')">Restaurant</button>
+        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Legal')">Legal</button>
+        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Technology')">Technology</button>
+        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Healthcare')">Healthcare</button>
+        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Finance')">Finance</button>
+        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Construction')">Construction</button>
+      </div>
+    </div>
+
+    <div id="directoryResults" class="grid md:grid-cols-2 gap-3 max-w-2xl mx-auto"></div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources" class="py-20 px-6 bg-parchment">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Member Resources</p>
+      <h2 class="font-display text-4xl font-bold text-navy-700">Tools & Downloads</h2>
+      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Exclusive resources available only to Montgomery Chamber members. Download guides, templates, and more.</p>
+    </div>
+
+    <div id="resourcesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+  </div>
+</section>
+
+<!-- NEW MEMBER CHECKLIST -->
+<section id="checklist" class="py-20 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Get Started</p>
+      <h2 class="font-display text-4xl font-bold text-navy-700">New Member Checklist</h2>
+      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Complete these steps to make sure you're getting the most from your membership from day one.</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-semibold text-navy-500" id="checkProgress">0 of 8 completed</span>
+        <span class="text-sm font-mono text-gold-400" id="checkPercent">0%</span>
+      </div>
+      <div class="w-full h-2 bg-navy-50 rounded-full overflow-hidden">
+        <div id="checkBar" class="h-full bg-gradient-to-r from-gold-300 to-gold-400 rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div id="checklistItems" class="space-y-2"></div>
+
+    <div id="checklistComplete" class="hidden mt-8 text-center p-8 bg-gold-50 rounded-2xl border border-gold-100">
+      <div class="text-4xl mb-3">🎉</div>
+      <h3 class="font-display text-2xl font-bold text-navy-700">You're All Set!</h3>
+      <p class="text-navy-300 mt-2 text-sm">You've completed the new member checklist. Welcome to the Montgomery business community!</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-navy-700 text-ivory py-16 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+            <span class="text-gold-300 font-display font-bold text-sm">MC</span>
+          </div>
+          <div>
+            <div class="font-display font-bold text-sm tracking-wide">MONTGOMERY</div>
+            <div class="text-[10px] tracking-[0.2em] text-navy-200 uppercase">Chamber of Commerce</div>
+          </div>
+        </div>
+        <p class="text-navy-200 text-sm leading-relaxed max-w-sm">Empowering Montgomery businesses since 1873. Your membership fuels economic growth, community development, and business success across the River Region.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-gold-300 tracking-wide uppercase text-xs">Contact</h4>
+        <div class="space-y-2 text-sm text-navy-200">
+          <p>41 Commerce Street</p>
+          <p>Montgomery, AL 36104</p>
+          <p class="mt-3">(334) 834-5200</p>
+          <p>info@montgomerychamber.com</p>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-semibold text-sm mb-4 text-gold-300 tracking-wide uppercase text-xs">Hours</h4>
+        <div class="space-y-2 text-sm text-navy-200">
+          <p>Monday – Friday</p>
+          <p>8:00 AM – 5:00 PM</p>
+          <p class="mt-3 text-navy-300 italic">Closed on major holidays</p>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs text-navy-300">© 2026 Montgomery Area Chamber of Commerce. All rights reserved.</p>
+      <p class="text-xs text-navy-400">This is a membership utility tool — not the official chamber website.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────
+const roiItems = [
+  { name: 'Business Directory Listing', value: 250, used: false },
+  { name: 'Networking Events (avg 10/yr)', value: 800, used: false },
+  { name: 'Member-to-Member Discounts', value: 500, used: false },
+  { name: 'Social Media Promotion', value: 300, used: false },
+  { name: 'Ribbon Cutting Ceremony', value: 400, used: false },
+  { name: 'Newsletter Advertising', value: 350, used: false },
+  { name: 'Legislative Advocacy', value: 600, used: false },
+  { name: 'Business Workshop Access', value: 450, used: false },
+  { name: 'Referral Program', value: 700, used: false },
+];
+
+const benefits = [
+  { title:'Networking Events', desc:'Monthly mixers, luncheons, and Business After Hours at premier Montgomery venues.', icon:'🤝', category:'networking', tip:'Attend at least 3 events/quarter to maximize connections.' },
+  { title:'Business Directory', desc:'Searchable online listing seen by thousands of residents and visitors each month.', icon:'📒', category:'marketing', tip:'Add keywords and a photo to boost your listing by 3x.' },
+  { title:'Ribbon Cuttings', desc:'Celebrate milestones with a public ceremony, press coverage, and social media spotlight.', icon:'✂️', category:'marketing', tip:'Available for openings, expansions, and anniversaries.' },
+  { title:'Member Discounts', desc:'Exclusive savings on office supplies, insurance, shipping, marketing services, and more.', icon:'💰', category:'savings', tip:'UPS savings alone can pay for your membership.' },
+  { title:'Legislative Advocacy', desc:'Your voice at city hall and the State Capitol through our Government Affairs team.', icon:'🏛️', category:'advocacy', tip:'Join a policy committee to amplify your influence.' },
+  { title:'Workshops & Seminars', desc:'Free and low-cost training on marketing, hiring, finance, and leadership.', icon:'📚', category:'networking', tip:'Check the calendar monthly—new topics rotate quarterly.' },
+  { title:'Referral Network', desc:'Get matched with other members when customers request recommendations.', icon:'🔗', category:'networking', tip:'Complete your profile to appear in referral searches.' },
+  { title:'Social Media Exposure', desc:'Featured posts, story takeovers, and tagged content across Chamber platforms.', icon:'📱', category:'marketing', tip:'Tag @MontgomeryChamber for repost opportunities.' },
+  { title:'Insurance Programs', desc:'Group rates on health, dental, and liability insurance for small businesses.', icon:'🛡️', category:'savings', tip:'Compare rates—members save an average of 15% annually.' },
+  { title:'Hot Deals Program', desc:'Offer exclusive deals to other members and their employees.', icon:'🔥', category:'savings', tip:'Running a Hot Deal averages 30+ new customer visits.' },
+  { title:'Committee Involvement', desc:'Join a committee and help shape community and economic development initiatives.', icon:'🗳️', category:'advocacy', tip:'Leadership committee spots fill fast—apply early.' },
+  { title:'Business Awards', desc:'Nomination eligibility for Small Business of the Year and other Chamber honors.', icon:'🏆', category:'marketing', tip:'Past winners report a 20% increase in brand recognition.' },
+];
+
+const events = [
+  { name:'Business After Hours', date:'Apr 3, 2026', time:'5:30 PM', location:'Renaissance Hotel', type:'networking', free:true },
+  { name:'Small Business Workshop: Digital Marketing', date:'Apr 10, 2026', time:'9:00 AM', location:'Chamber Boardroom', type:'workshop', free:true },
+  { name:'Legislative Luncheon', date:'Apr 17, 2026', time:'11:30 AM', location:'Embassy Suites', type:'networking', free:false, price:'$35' },
+  { name:'Women in Business Roundtable', date:'Apr 22, 2026', time:'8:00 AM', location:'Hyatt Place', type:'networking', free:true },
+  { name:'Cybersecurity for Small Business', date:'May 1, 2026', time:'2:00 PM', location:'Virtual (Zoom)', type:'workshop', free:true },
+  { name:'Annual Golf Classic', date:'May 8, 2026', time:'7:30 AM', location:'Wynlakes Golf Club', type:'networking', free:false, price:'$150' },
+  { name:'New Member Orientation', date:'May 14, 2026', time:'10:00 AM', location:'Chamber Office', type:'workshop', free:true },
+  { name:'Economic Forecast Breakfast', date:'May 21, 2026', time:'7:30 AM', location:'Renaissance Hotel', type:'networking', free:false, price:'$45' },
+];
+
+const directoryEntries = [
+  { name:'River Region Dental', industry:'Healthcare', desc:'Family & cosmetic dentistry in East Montgomery.' },
+  { name:'Capital City Legal Group', industry:'Legal', desc:'Business law, real estate, and estate planning.' },
+  { name:'Montgomery Tech Solutions', industry:'Technology', desc:'IT services, cybersecurity, and cloud computing.' },
+  { name:'Southern Roots Café', industry:'Restaurant', desc:'Farm-to-table Southern cuisine on Dexter Avenue.' },
+  { name:'Tri-Star Construction', industry:'Construction', desc:'Commercial and residential construction since 1998.' },
+  { name:'Jubilee Financial Advisors', industry:'Finance', desc:'Wealth management and retirement planning.' },
+  { name:'Alabama Robotics Inc.', industry:'Technology', desc:'Industrial automation and robotics integration.' },
+  { name:'Heritage Health Clinic', industry:'Healthcare', desc:'Primary care and urgent care in Eastchase.' },
+  { name:'Magnolia Marketing Co.', industry:'Marketing', desc:'Digital strategy, branding, and social media.' },
+  { name:'Cornerstone CPA', industry:'Finance', desc:'Tax preparation, bookkeeping, and CFO services.' },
+  { name:'Prattville Lumber & Supply', industry:'Construction', desc:'Building materials and contractor supply.' },
+  { name:'The Taco Mama', industry:'Restaurant', desc:'Casual Tex-Mex with locations across the Gump.' },
+];
+
+const resources = [
+  { title:'Member Benefits Guide', type:'PDF', icon:'📄', desc:'Complete overview of all membership perks.' },
+  { title:'Logo & Badge Pack', type:'ZIP', icon:'🎨', desc:'Chamber member badges for your website & emails.' },
+  { title:'Event Calendar 2026', type:'PDF', icon:'📅', desc:'Full year of Chamber events and deadlines.' },
+  { title:'Business Toolkit', type:'PDF', icon:'🧰', desc:'Templates for plans, pitches, and marketing.' },
+  { title:'Legislative Priorities', type:'PDF', icon:'📋', desc:'Current policy positions and advocacy agenda.' },
+  { title:'Discount Directory', type:'PDF', icon:'💲', desc:'All member-to-member savings in one place.' },
+  { title:'New Member Welcome Kit', type:'PDF', icon:'🎁', desc:'Everything you need to hit the ground running.' },
+  { title:'Social Media Graphics', type:'ZIP', icon:'📸', desc:'Ready-to-post graphics with Chamber branding.' },
+];
+
+const checklistSteps = [
+  { text:'Complete your online business profile', tip:'Add your logo, description, hours, and contact info.' },
+  { text:'Download the Chamber member badge', tip:'Display it on your website and email signature.' },
+  { text:'Attend your first Business After Hours', tip:'Best networking ROI of any Chamber event.' },
+  { text:'Register for a workshop or seminar', tip:'Free professional development included in your dues.' },
+  { text:'Review and activate your member discounts', tip:'UPS, insurance, and office supply savings add up fast.' },
+  { text:'Submit a Hot Deal for other members', tip:'Great way to get 30+ new customers quickly.' },
+  { text:'Schedule a ribbon cutting or milestone event', tip:'Free PR and social media coverage included.' },
+  { text:'Join a committee or task force', tip:'Deepens relationships and raises your profile.' },
+];
+
+// ─── RENDER FUNCTIONS ──────────────────────────────────────
+
+function renderROI() {
+  const grid = document.getElementById('roiGrid');
+  grid.innerHTML = roiItems.map((item, i) => `
+    <button onclick="toggleROI(${i})" class="flex items-center justify-between p-4 rounded-xl border transition-all text-left ${item.used ? 'bg-gold-50 border-gold-200' : 'bg-white border-navy-50 hover:border-gold-200'}">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-md flex items-center justify-center ${item.used ? 'bg-gold-300 text-white' : 'bg-navy-50 text-navy-200'}">
+          ${item.used ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : ''}
+        </div>
+        <span class="text-sm font-medium ${item.used ? 'text-navy-600' : 'text-navy-400'}">${item.name}</span>
+      </div>
+      <span class="font-mono text-sm ${item.used ? 'text-gold-500 font-semibold' : 'text-navy-200'}">$${item.value}</span>
+    </button>
+  `).join('');
+  updateROITotal();
+}
+
+function toggleROI(i) {
+  roiItems[i].used = !roiItems[i].used;
+  renderROI();
+}
+
+function updateROITotal() {
+  const total = roiItems.filter(i => i.used).reduce((s, i) => s + i.value, 0);
+  document.getElementById('totalValue').textContent = '$' + total.toLocaleString();
+}
+
+function renderBenefits(filter = 'all') {
+  const grid = document.getElementById('benefitsGrid');
+  const filtered = filter === 'all' ? benefits : benefits.filter(b => b.category === filter);
+  grid.innerHTML = filtered.map(b => `
+    <div class="benefit-card bg-white rounded-2xl p-6" data-category="${b.category}">
+      <div class="flex items-start justify-between mb-4">
+        <span class="text-3xl">${b.icon}</span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
+          b.category === 'networking' ? 'bg-navy-50 text-navy-400' :
+          b.category === 'marketing' ? 'bg-clay-50 text-clay-400' :
+          b.category === 'savings' ? 'bg-gold-50 text-gold-500' :
+          'bg-green-50 text-green-600'
+        }">${b.category}</span>
+      </div>
+      <h3 class="font-display text-lg font-bold text-navy-700 mb-2">${b.title}</h3>
+      <p class="text-sm text-navy-300 leading-relaxed mb-4">${b.desc}</p>
+      <div class="flex items-start gap-2 p-3 rounded-lg bg-gold-50/60 border border-gold-100/60">
+        <span class="text-gold-400 text-xs mt-0.5">💡</span>
+        <p class="text-xs text-gold-600 leading-relaxed">${b.tip}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterBenefits(category, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBenefits(category);
+}
+
+function renderEvents(filter = 'all') {
+  const list = document.getElementById('eventsList');
+  let filtered = events;
+  if (filter === 'free') filtered = events.filter(e => e.free);
+  else if (filter === 'networking') filtered = events.filter(e => e.type === 'networking');
+  else if (filter === 'workshop') filtered = events.filter(e => e.type === 'workshop');
+
+  list.innerHTML = filtered.map(e => `
+    <div class="event-row flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl bg-white/5 cursor-default">
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-white/10">
+          <span class="text-[10px] uppercase text-gold-300 font-semibold">${e.date.split(' ')[0]}</span>
+          <span class="text-xl font-bold text-ivory leading-none">${e.date.split(' ')[1].replace(',','')}</span>
+        </div>
+        <div>
+          <h4 class="font-semibold text-ivory text-sm">${e.name}</h4>
+          <p class="text-navy-200 text-xs mt-0.5">${e.date} · ${e.time} · ${e.location}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 mt-3 md:mt-0">
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${e.type === 'networking' ? 'bg-white/10 text-gold-200' : 'bg-white/10 text-sky-300'}">${e.type}</span>
+        <span class="px-3 py-1 rounded-lg text-xs font-semibold ${e.free ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/10 text-ivory'}">${e.free ? 'Free' : e.price + ' members'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterEvents(type) {
+  document.querySelectorAll('.event-filter').forEach(b => {
+    b.classList.remove('active', 'bg-white/10', 'text-ivory');
+    b.classList.add('bg-white/5', 'text-navy-200');
+  });
+  event.target.classList.add('active', 'bg-white/10', 'text-ivory');
+  event.target.classList.remove('bg-white/5', 'text-navy-200');
+  renderEvents(type);
+}
+
+function searchDirectory(query) {
+  document.getElementById('directorySearch').value = query;
+  const results = document.getElementById('directoryResults');
+  const q = query.toLowerCase();
+  const filtered = q ? directoryEntries.filter(e =>
+    e.name.toLowerCase().includes(q) || e.industry.toLowerCase().includes(q) || e.desc.toLowerCase().includes(q)
+  ) : directoryEntries;
+
+  results.innerHTML = filtered.length ? filtered.map(e => `
+    <div class="flex items-start gap-4 p-4 bg-white rounded-xl border border-navy-50 hover:border-gold-200 transition-colors">
+      <div class="w-10 h-10 rounded-lg bg-navy-500 flex items-center justify-center flex-shrink-0">
+        <span class="text-gold-300 font-display font-bold text-xs">${e.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
+      </div>
+      <div>
+        <h4 class="font-semibold text-navy-700 text-sm">${e.name}</h4>
+        <p class="text-xs text-gold-500 font-medium">${e.industry}</p>
+        <p class="text-xs text-navy-300 mt-1">${e.desc}</p>
+      </div>
+    </div>
+  `).join('') : '<p class="text-center text-navy-300 text-sm col-span-2 py-8">No results found. Try a different search term.</p>';
+}
+
+function renderResources() {
+  const grid = document.getElementById('resourcesGrid');
+  grid.innerHTML = resources.map(r => `
+    <div class="bg-white rounded-xl p-5 border border-navy-50 hover:border-gold-200 hover:shadow-lg hover:shadow-gold-100/20 transition-all group cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <span class="text-2xl">${r.icon}</span>
+        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-navy-50 text-navy-400">${r.type}</span>
+      </div>
+      <h4 class="font-semibold text-navy-700 text-sm mb-1">${r.title}</h4>
+      <p class="text-xs text-navy-300 leading-relaxed mb-4">${r.desc}</p>
+      <div class="flex items-center gap-1 text-gold-400 text-xs font-semibold group-hover:text-gold-500 transition-colors">
+        <span>Download</span>
+        <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderChecklist() {
+  const container = document.getElementById('checklistItems');
+  const completed = JSON.parse(localStorage.getItem('mgm_checklist') || '[]');
+
+  container.innerHTML = checklistSteps.map((step, i) => {
+    const done = completed.includes(i);
+    return `
+    <div class="check-item ${done ? 'completed' : ''} flex items-start gap-4 p-4 rounded-xl bg-white border border-navy-50 hover:border-gold-200 transition-all cursor-pointer" onclick="toggleCheck(${i})">
+      <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 ${done ? 'bg-gold-300 text-white' : 'bg-navy-50 border border-navy-100'}">
+        ${done ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : ''}
+      </div>
+      <div class="flex-1">
+        <p class="check-text text-sm font-medium text-navy-600">${step.text}</p>
+        <p class="text-xs text-navy-300 mt-1">${step.tip}</p>
+      </div>
+      <span class="font-mono text-xs text-navy-200 mt-1">${i + 1}/8</span>
+    </div>`;
+  }).join('');
+
+  updateCheckProgress(completed);
+}
+
+function toggleCheck(i) {
+  let completed = JSON.parse(localStorage.getItem('mgm_checklist') || '[]');
+  if (completed.includes(i)) completed = completed.filter(x => x !== i);
+  else completed.push(i);
+  localStorage.setItem('mgm_checklist', JSON.stringify(completed));
+  renderChecklist();
+}
+
+function updateCheckProgress(completed) {
+  const pct = Math.round((completed.length / checklistSteps.length) * 100);
+  document.getElementById('checkProgress').textContent = `${completed.length} of ${checklistSteps.length} completed`;
+  document.getElementById('checkPercent').textContent = pct + '%';
+  document.getElementById('checkBar').style.width = pct + '%';
+  document.getElementById('checklistComplete').classList.toggle('hidden', completed.length < checklistSteps.length);
+}
+
+// ─── COUNT-UP ANIMATION ────────────────────────────────────
+function animateCounters() {
+  document.querySelectorAll('.count-up').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const duration = 1500;
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString() + (target === 98 ? '%' : target === 2200 ? '+' : '+');
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+
+// ─── UTILITIES ─────────────────────────────────────────────
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('hidden');
+}
+
+// ─── INIT ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderROI();
+  renderBenefits();
+  renderEvents();
+  searchDirectory('');
+  renderResources();
+  renderChecklist();
+
+  // Trigger count-up when in view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.count-up').forEach(el => observer.observe(el));
+});
+</script>
+
+</body>
+</html>
