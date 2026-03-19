@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +11,6 @@
 tailwind.config = {
   theme: {
     extend: {
-      colors: {
-        ivory: '#FAF7F2',
-        parchment: '#F0EBE1',
-        gold: { 50:'#FFF9E6', 100:'#FFF0B8', 200:'#FFE078', 300:'#D4A843', 400:'#B8912E', 500:'#9A7520', 600:'#7A5C18', 700:'#5C4512' },
-        navy: { 50:'#E8EDF5', 100:'#C5D0E8', 200:'#8FA3CC', 300:'#5A76B0', 400:'#3A5A96', 500:'#1E3A6E', 600:'#162D56', 700:'#0F1F3D' },
-        clay: { 50:'#FBF0EB', 100:'#F2D5C7', 200:'#E0A88B', 300:'#C67D56', 400:'#A8603A', 500:'#8B4726' },
-      },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
         body: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
@@ -29,671 +22,608 @@ tailwind.config = {
 </script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Source Sans 3', sans-serif; background: #FAF7F2; color: #0F1F3D; }
 
-  /* Grain overlay */
+  :root, [data-theme="light"] {
+    --bg-body: #FAF7F2;
+    --bg-card: #FFFFFF;
+    --bg-alt: #F0EBE1;
+    --bg-elevated: #FFFFFF;
+    --bg-nav: rgba(250,247,242,0.92);
+    --bg-input: #FFFFFF;
+    --text-heading: #0F1F3D;
+    --text-body: #1E3A6E;
+    --text-muted: #5A76B0;
+    --text-faint: #8FA3CC;
+    --text-on-dark: #FAF7F2;
+    --accent: #D4A843;
+    --accent-hover: #B8912E;
+    --accent-bg: #FFF9E6;
+    --accent-border: #FFF0B8;
+    --accent-text: #7A5C18;
+    --navy: #1E3A6E;
+    --navy-light: #E8EDF5;
+    --navy-dark: #0F1F3D;
+    --border: rgba(30,58,110,0.08);
+    --border-hover: rgba(212,168,67,0.35);
+    --shadow: 0 20px 40px -12px rgba(30,58,110,0.12);
+    --tag-net-bg: #E8EDF5; --tag-net: #3A5A96;
+    --tag-mkt-bg: #FBF0EB; --tag-mkt: #A8603A;
+    --tag-sav-bg: #FFF9E6; --tag-sav: #9A7520;
+    --tag-adv-bg: #ECFDF5; --tag-adv: #16A34A;
+    --ev-bg: #0F1F3D;
+    --ev-card: rgba(255,255,255,0.05);
+    --ev-card-h: rgba(255,255,255,0.08);
+    --tip-bg: rgba(255,249,230,0.6);
+    --tip-border: rgba(255,240,184,0.6);
+    --roi-on-bg: #FFF9E6;
+    --roi-on-border: #FFF0B8;
+    --roi-off-bg: #E8EDF5;
+    --toggle-track: #E8EDF5;
+    --toggle-knob: #FFFFFF;
+    --toggle-icon: #D4A843;
+    --footer-bg: #0F1F3D;
+    --progress-track: #E8EDF5;
+    --grain: 0.025;
+    --pattern: 0.03;
+  }
+
+  [data-theme="dark"] {
+    --bg-body: #0B1120;
+    --bg-card: #131C2E;
+    --bg-alt: #0F1726;
+    --bg-elevated: #182236;
+    --bg-nav: rgba(11,17,32,0.92);
+    --bg-input: #182236;
+    --text-heading: #E8EDF5;
+    --text-body: #C5D0E8;
+    --text-muted: #8FA3CC;
+    --text-faint: #5A76B0;
+    --text-on-dark: #0F1F3D;
+    --accent: #D4A843;
+    --accent-hover: #FFE078;
+    --accent-bg: rgba(212,168,67,0.1);
+    --accent-border: rgba(212,168,67,0.2);
+    --accent-text: #FFE078;
+    --navy: #8FA3CC;
+    --navy-light: rgba(143,163,204,0.1);
+    --navy-dark: #E8EDF5;
+    --border: rgba(143,163,204,0.1);
+    --border-hover: rgba(212,168,67,0.3);
+    --shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+    --tag-net-bg: rgba(143,163,204,0.12); --tag-net: #8FA3CC;
+    --tag-mkt-bg: rgba(224,168,139,0.12); --tag-mkt: #E0A88B;
+    --tag-sav-bg: rgba(212,168,67,0.12); --tag-sav: #FFE078;
+    --tag-adv-bg: rgba(74,222,128,0.1); --tag-adv: #4ADE80;
+    --ev-bg: #080D18;
+    --ev-card: rgba(255,255,255,0.03);
+    --ev-card-h: rgba(255,255,255,0.06);
+    --tip-bg: rgba(212,168,67,0.08);
+    --tip-border: rgba(212,168,67,0.15);
+    --roi-on-bg: rgba(212,168,67,0.1);
+    --roi-on-border: rgba(212,168,67,0.25);
+    --roi-off-bg: rgba(143,163,204,0.1);
+    --toggle-track: #182236;
+    --toggle-knob: #D4A843;
+    --toggle-icon: #0F1F3D;
+    --footer-bg: #080D18;
+    --progress-track: rgba(143,163,204,0.12);
+    --grain: 0.018;
+    --pattern: 0.02;
+  }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg-body);
+    color: var(--text-heading);
+    transition: background 0.5s ease, color 0.4s ease;
+  }
   body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.025;
+    content: ''; position: fixed; inset: 0; pointer-events: none;
+    opacity: var(--grain); z-index: 9999;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    z-index: 9999;
   }
 
-  /* Animations */
   @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-  @keyframes slideRight { from { transform:scaleX(0); } to { transform:scaleX(1); } }
-  @keyframes countUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .anim { animation: fadeUp 0.7s ease-out both; }
+  .d1{animation-delay:.1s} .d2{animation-delay:.2s} .d3{animation-delay:.3s} .d4{animation-delay:.4s}
 
-  .animate-fade-up { animation: fadeUp 0.7s ease-out both; }
-  .animate-fade-in { animation: fadeIn 0.5s ease-out both; }
-  .animate-slide-right { animation: slideRight 0.8s ease-out both; transform-origin: left; }
-
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
-  .stagger-6 { animation-delay: 0.6s; }
-
-  /* Progress rings */
-  .progress-ring-bg { stroke: #E8EDF5; }
-  .progress-ring-fill { transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1); }
-
-  /* Cards */
   .benefit-card {
+    background: var(--bg-elevated); border: 1px solid var(--border);
     transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-    border: 1px solid rgba(30,58,110,0.08);
   }
-  .benefit-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -12px rgba(30,58,110,0.12), 0 0 0 1px rgba(212,168,67,0.2);
-    border-color: rgba(212,168,67,0.3);
-  }
+  .benefit-card:hover { transform:translateY(-4px); box-shadow:var(--shadow),0 0 0 1px var(--border-hover); border-color:var(--border-hover); }
 
-  .event-row {
-    transition: all 0.25s ease;
-    border-left: 3px solid transparent;
-  }
-  .event-row:hover {
-    background: rgba(30,58,110,0.03);
-    border-left-color: #D4A843;
-    padding-left: 20px;
-  }
+  .tab-btn { position:relative; color:var(--text-muted); transition:color .3s; }
+  .tab-btn::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:2px; background:var(--accent); transform:scaleX(0); transition:transform .3s cubic-bezier(.4,0,.2,1); }
+  .tab-btn.active { color:var(--text-body); }
+  .tab-btn.active::after { transform:scaleX(1); }
 
-  /* Tab system */
-  .tab-btn { position: relative; transition: color 0.3s; }
-  .tab-btn::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #D4A843;
-    transform: scaleX(0);
-    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-  }
-  .tab-btn.active { color: #1E3A6E; }
-  .tab-btn.active::after { transform: scaleX(1); }
+  .check-item.completed { opacity:0.5; }
+  .check-item.completed .check-text { text-decoration:line-through; }
 
-  /* Checklist */
-  .check-item { transition: all 0.3s; }
-  .check-item.completed { opacity: 0.5; }
-  .check-item.completed .check-text { text-decoration: line-through; }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--text-faint); border-radius:3px; }
 
-  /* Tooltip */
-  .tooltip-trigger { position: relative; }
-  .tooltip-trigger .tooltip-content {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.2s;
-    white-space: nowrap;
-    z-index: 50;
-  }
-  .tooltip-trigger:hover .tooltip-content {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  .search-glow:focus { box-shadow:0 0 0 3px rgba(212,168,67,0.2); outline:none; }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(30,58,110,0.15); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(30,58,110,0.25); }
-
-  /* Search */
-  .search-glow:focus {
-    box-shadow: 0 0 0 3px rgba(212,168,67,0.2), 0 1px 2px rgba(0,0,0,0.05);
+  .theme-toggle {
+    width:56px; height:28px; border-radius:14px;
+    background:var(--toggle-track); border:1px solid var(--border);
+    cursor:pointer; position:relative; display:flex; align-items:center; padding:0 3px;
+    transition: all .4s ease;
   }
-
-  /* Modal */
-  .modal-backdrop {
-    backdrop-filter: blur(4px);
-    background: rgba(15,31,61,0.4);
+  .theme-toggle:hover { border-color:var(--accent); }
+  .theme-toggle .knob {
+    width:22px; height:22px; border-radius:50%; background:var(--toggle-knob);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 1px 4px rgba(0,0,0,0.2);
+    transition: transform .45s cubic-bezier(.4,0,.2,1), background .4s ease;
   }
+  [data-theme="dark"] .theme-toggle .knob { transform:translateX(27px); }
+  .knob svg { width:14px; height:14px; position:absolute; transition:all .4s cubic-bezier(.4,0,.2,1); }
+  [data-theme="light"] .knob .sun { opacity:1; transform:rotate(0) scale(1); }
+  [data-theme="light"] .knob .moon { opacity:0; transform:rotate(-90deg) scale(.5); }
+  [data-theme="dark"] .knob .sun { opacity:0; transform:rotate(90deg) scale(.5); }
+  [data-theme="dark"] .knob .moon { opacity:1; transform:rotate(0) scale(1); }
+
+  a { text-decoration:none; }
 </style>
 </head>
 <body class="min-h-screen">
 
-<!-- NAVIGATION -->
-<nav class="fixed top-0 left-0 right-0 z-50 bg-ivory/90 backdrop-blur-md border-b border-navy-50">
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md" style="background:var(--bg-nav);border-bottom:1px solid var(--border);">
   <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-lg bg-navy-500 flex items-center justify-center">
-        <span class="text-gold-300 font-display font-bold text-sm">MC</span>
-      </div>
+    <a href="https://www.montgomerychamber.com/" target="_blank" class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--navy);"><span class="font-display font-bold text-sm" style="color:var(--accent);">MC</span></div>
       <div>
-        <div class="font-display font-bold text-navy-700 text-sm tracking-wide leading-none">MONTGOMERY</div>
-        <div class="text-[10px] tracking-[0.2em] text-navy-300 uppercase font-medium">Chamber of Commerce</div>
+        <div class="font-display font-bold text-sm tracking-wide leading-none" style="color:var(--text-heading);">MONTGOMERY</div>
+        <div class="text-[10px] tracking-[0.2em] uppercase font-medium" style="color:var(--text-muted);">Chamber of Commerce</div>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-7">
+      <button onclick="scrollToEl('benefits')" class="text-sm font-medium" style="color:var(--text-muted);">Benefits</button>
+      <button onclick="scrollToEl('events')" class="text-sm font-medium" style="color:var(--text-muted);">Events</button>
+      <button onclick="scrollToEl('quicklinks')" class="text-sm font-medium" style="color:var(--text-muted);">Quick Links</button>
+      <button onclick="scrollToEl('directory')" class="text-sm font-medium" style="color:var(--text-muted);">Directory</button>
+      <button onclick="scrollToEl('checklist')" class="text-sm font-medium" style="color:var(--text-muted);">Get Started</button>
+      <div class="theme-toggle" onclick="toggleTheme()" role="button" aria-label="Toggle theme" tabindex="0">
+        <div class="knob">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--toggle-icon);"><circle cx="12" cy="12" r="5" stroke-width="2"/><path stroke-width="2" stroke-linecap="round" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.73 12.73l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--toggle-icon);"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
       </div>
     </div>
-    <div class="hidden md:flex items-center gap-8">
-      <button onclick="scrollToSection('benefits')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Benefits</button>
-      <button onclick="scrollToSection('events')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Events</button>
-      <button onclick="scrollToSection('directory')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Directory</button>
-      <button onclick="scrollToSection('resources')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Resources</button>
-      <button onclick="scrollToSection('checklist')" class="text-sm text-navy-400 hover:text-navy-600 transition-colors font-medium">Get Started</button>
+    <div class="flex items-center gap-3 md:hidden">
+      <div class="theme-toggle" onclick="toggleTheme()" style="width:46px;height:24px;border-radius:12px;padding:0 2px;">
+        <div class="knob" style="width:18px;height:18px;">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--toggle-icon);width:11px;height:11px;"><circle cx="12" cy="12" r="5" stroke-width="2.5"/><path stroke-width="2.5" stroke-linecap="round" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.73 12.73l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--toggle-icon);width:11px;height:11px;"><path stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+      </div>
+      <button onclick="document.getElementById('mob').classList.toggle('hidden')" class="w-9 h-9 flex items-center justify-center rounded-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--text-body);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
     </div>
-    <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-parchment transition-colors">
-      <svg id="menuIcon" class="w-5 h-5 text-navy-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
   </div>
-  <!-- Mobile Menu -->
-  <div id="mobileMenu" class="hidden md:hidden bg-ivory border-t border-navy-50 px-6 py-4 space-y-3">
-    <button onclick="scrollToSection('benefits');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Benefits</button>
-    <button onclick="scrollToSection('events');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Events</button>
-    <button onclick="scrollToSection('directory');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Directory</button>
-    <button onclick="scrollToSection('resources');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Resources</button>
-    <button onclick="scrollToSection('checklist');toggleMobileMenu()" class="block w-full text-left text-sm text-navy-500 font-medium py-1">Get Started</button>
+  <div id="mob" class="hidden md:hidden px-6 py-4 space-y-3" style="background:var(--bg-body);border-top:1px solid var(--border);">
+    <button onclick="scrollToEl('benefits');document.getElementById('mob').classList.add('hidden')" class="block w-full text-left text-sm font-medium py-1" style="color:var(--text-body);">Benefits</button>
+    <button onclick="scrollToEl('events');document.getElementById('mob').classList.add('hidden')" class="block w-full text-left text-sm font-medium py-1" style="color:var(--text-body);">Events</button>
+    <button onclick="scrollToEl('quicklinks');document.getElementById('mob').classList.add('hidden')" class="block w-full text-left text-sm font-medium py-1" style="color:var(--text-body);">Quick Links</button>
+    <button onclick="scrollToEl('directory');document.getElementById('mob').classList.add('hidden')" class="block w-full text-left text-sm font-medium py-1" style="color:var(--text-body);">Directory</button>
+    <button onclick="scrollToEl('checklist');document.getElementById('mob').classList.add('hidden')" class="block w-full text-left text-sm font-medium py-1" style="color:var(--text-body);">Get Started</button>
   </div>
 </nav>
 
 <!-- HERO -->
 <header class="pt-32 pb-20 px-6 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(45deg, #1E3A6E 0, #1E3A6E 1px, transparent 0, transparent 50%); background-size: 28px 28px;"></div>
+  <div class="absolute inset-0" style="opacity:var(--pattern);background-image:repeating-linear-gradient(45deg,var(--navy) 0,var(--navy) 1px,transparent 0,transparent 50%);background-size:28px 28px;"></div>
   <div class="max-w-7xl mx-auto relative">
     <div class="max-w-3xl">
-      <p class="animate-fade-up text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-4">Member Dashboard</p>
-      <h1 class="animate-fade-up stagger-1 font-display text-5xl md:text-6xl lg:text-7xl font-900 text-navy-700 leading-[1.05] mb-6">
-        Unlock the <em class="text-gold-300 not-italic">full power</em> of your membership.
-      </h1>
-      <p class="animate-fade-up stagger-2 text-lg text-navy-300 max-w-xl leading-relaxed mb-8">
-        Your Montgomery Chamber membership is more than a plaque on the wall. Explore every benefit, track your engagement, and connect with the business community.
-      </p>
-      <div class="animate-fade-up stagger-3 flex flex-wrap gap-3">
-        <button onclick="scrollToSection('checklist')" class="px-6 py-3 bg-navy-500 text-ivory rounded-lg font-semibold text-sm hover:bg-navy-600 transition-colors shadow-lg shadow-navy-500/20">
-          Start Your Checklist →
-        </button>
-        <button onclick="scrollToSection('benefits')" class="px-6 py-3 bg-ivory text-navy-500 border border-navy-100 rounded-lg font-semibold text-sm hover:border-gold-300 hover:text-gold-600 transition-all">
-          Explore Benefits
-        </button>
+      <p class="anim font-mono text-xs tracking-[0.25em] uppercase mb-4" style="color:var(--accent);">Member Dashboard</p>
+      <h1 class="anim d1 font-display text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mb-6" style="color:var(--text-heading);">Unlock the <em class="not-italic" style="color:var(--accent);">full power</em> of your membership.</h1>
+      <p class="anim d2 text-lg max-w-xl leading-relaxed mb-8" style="color:var(--text-muted);">Your Montgomery Chamber membership is more than a plaque on the wall. Explore every benefit, track your engagement, and connect with the business community.</p>
+      <div class="anim d3 flex flex-wrap gap-3">
+        <button onclick="scrollToEl('checklist')" class="px-6 py-3 rounded-lg font-semibold text-sm shadow-lg" style="background:var(--navy);color:var(--text-on-dark);">Start Your Checklist →</button>
+        <a href="https://www.montgomerychamber.com/value-benefits" target="_blank" class="px-6 py-3 rounded-lg font-semibold text-sm border" style="background:var(--bg-body);color:var(--text-body);border-color:var(--border);">Official Benefits ↗</a>
       </div>
     </div>
-
-    <!-- Stats bar -->
-    <div class="animate-fade-up stagger-4 mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
-        <div class="font-mono text-3xl font-bold text-navy-600 count-up" data-target="2200">0</div>
-        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">Member Businesses</div>
+    <div class="anim d4 mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="rounded-xl p-5" style="background:var(--bg-elevated);border:1px solid var(--border);">
+        <div class="font-mono text-3xl font-bold count-up" data-target="2200" style="color:var(--text-body);">0</div>
+        <div class="text-xs mt-1 tracking-wide uppercase" style="color:var(--text-muted);">Member Businesses</div>
       </div>
-      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
-        <div class="font-mono text-3xl font-bold text-navy-600 count-up" data-target="150">0</div>
-        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">Annual Events</div>
+      <div class="rounded-xl p-5" style="background:var(--bg-elevated);border:1px solid var(--border);">
+        <div class="font-mono text-3xl font-bold count-up" data-target="150" style="color:var(--text-body);">0</div>
+        <div class="text-xs mt-1 tracking-wide uppercase" style="color:var(--text-muted);">Annual Events</div>
       </div>
-      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
-        <div class="font-mono text-3xl font-bold text-gold-400 count-up" data-target="45">0</div>
-        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">Exclusive Discounts</div>
+      <div class="rounded-xl p-5" style="background:var(--bg-elevated);border:1px solid var(--border);">
+        <div class="font-mono text-3xl font-bold count-up" data-target="45" style="color:var(--accent);">0</div>
+        <div class="text-xs mt-1 tracking-wide uppercase" style="color:var(--text-muted);">Exclusive Deals</div>
       </div>
-      <div class="bg-white/60 rounded-xl p-5 border border-navy-50">
-        <div class="font-mono text-3xl font-bold text-navy-600 count-up" data-target="98">0</div>
-        <div class="text-xs text-navy-300 mt-1 tracking-wide uppercase">% Recommend</div>
+      <div class="rounded-xl p-5" style="background:var(--bg-elevated);border:1px solid var(--border);">
+        <div class="font-mono text-3xl font-bold count-up" data-target="98" style="color:var(--text-body);">0</div>
+        <div class="text-xs mt-1 tracking-wide uppercase" style="color:var(--text-muted);">% Recommend</div>
       </div>
     </div>
   </div>
 </header>
 
-<!-- MEMBERSHIP VALUE TRACKER -->
-<section class="py-16 px-6 bg-white border-y border-navy-50">
+<!-- ROI TRACKER -->
+<section class="py-16 px-6" style="background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
       <div>
-        <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Value Tracker</p>
-        <h2 class="font-display text-3xl font-bold text-navy-700">Your Membership ROI</h2>
-        <p class="text-navy-300 text-sm mt-2 max-w-md">See how much value you're getting. Click benefits you've used to track your personal ROI.</p>
+        <p class="font-mono text-xs tracking-[0.25em] uppercase mb-2" style="color:var(--accent);">Value Tracker</p>
+        <h2 class="font-display text-3xl font-bold" style="color:var(--text-heading);">Your Membership ROI</h2>
+        <p class="text-sm mt-2 max-w-md" style="color:var(--text-muted);">Click the benefits you've used to track estimated value.</p>
       </div>
       <div class="mt-4 md:mt-0 text-right">
-        <div class="text-xs text-navy-300 uppercase tracking-wide">Estimated Value Used</div>
-        <div id="totalValue" class="font-mono text-4xl font-bold text-gold-400">$0</div>
+        <div class="text-xs uppercase tracking-wide" style="color:var(--text-muted);">Estimated Value</div>
+        <div id="totalValue" class="font-mono text-4xl font-bold" style="color:var(--accent);">$0</div>
       </div>
     </div>
-
     <div id="roiGrid" class="grid md:grid-cols-3 gap-3"></div>
   </div>
 </section>
 
 <!-- BENEFITS -->
-<section id="benefits" class="py-20 px-6">
+<section id="benefits" class="py-20 px-6" style="background:var(--bg-body);">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-14">
-      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Membership Benefits</p>
-      <h2 class="font-display text-4xl font-bold text-navy-700">Everything Included</h2>
-      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Your annual membership unlocks a comprehensive suite of tools, connections, and resources to grow your business in Montgomery.</p>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase mb-2" style="color:var(--accent);">Membership Benefits</p>
+      <h2 class="font-display text-4xl font-bold" style="color:var(--text-heading);">Everything Included</h2>
+      <p class="mt-3 max-w-lg mx-auto" style="color:var(--text-muted);">Networking, visibility, savings, and advocacy to grow your Montgomery business.</p>
     </div>
-
-    <!-- Category tabs -->
     <div class="flex justify-center gap-6 mb-10 flex-wrap">
-      <button class="tab-btn active text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('all', this)">All Benefits</button>
-      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('networking', this)">Networking</button>
-      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('marketing', this)">Marketing</button>
-      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('savings', this)">Savings</button>
-      <button class="tab-btn text-sm font-semibold text-navy-300 pb-2 px-1" onclick="filterBenefits('advocacy', this)">Advocacy</button>
+      <button class="tab-btn active text-sm font-semibold pb-2 px-1" onclick="filterBen('all',this)">All</button>
+      <button class="tab-btn text-sm font-semibold pb-2 px-1" onclick="filterBen('networking',this)">Networking</button>
+      <button class="tab-btn text-sm font-semibold pb-2 px-1" onclick="filterBen('marketing',this)">Marketing</button>
+      <button class="tab-btn text-sm font-semibold pb-2 px-1" onclick="filterBen('savings',this)">Savings</button>
+      <button class="tab-btn text-sm font-semibold pb-2 px-1" onclick="filterBen('advocacy',this)">Advocacy</button>
     </div>
-
-    <div id="benefitsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <div id="benGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </div>
 </section>
 
 <!-- EVENTS -->
-<section id="events" class="py-20 px-6 bg-navy-700 text-ivory relative overflow-hidden">
-  <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 20% 80%, #D4A843 0%, transparent 50%), radial-gradient(circle at 80% 20%, #D4A843 0%, transparent 50%);"></div>
+<section id="events" class="py-20 px-6 relative overflow-hidden" style="background:var(--ev-bg);color:white;">
+  <div class="absolute inset-0 opacity-5" style="background-image:radial-gradient(circle at 20% 80%,var(--accent) 0%,transparent 50%),radial-gradient(circle at 80% 20%,var(--accent) 0%,transparent 50%);"></div>
   <div class="max-w-7xl mx-auto relative">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
       <div>
-        <p class="text-gold-300 font-mono text-xs tracking-[0.25em] uppercase mb-2">Upcoming Events</p>
+        <p class="font-mono text-xs tracking-[0.25em] uppercase mb-2" style="color:var(--accent);">Events Calendar</p>
         <h2 class="font-display text-4xl font-bold">Don't Miss Out</h2>
-        <p class="text-navy-200 mt-2 max-w-md text-sm">Your membership includes access to all of these events. Some are free, others are at a member-only discounted rate.</p>
+        <p class="mt-2 max-w-md text-sm" style="color:rgba(255,255,255,0.5);">Access Chamber events, member events, and community happenings with your membership.</p>
       </div>
-      <div class="mt-4 md:mt-0 flex gap-2">
-        <button onclick="filterEvents('all')" class="event-filter active px-4 py-2 rounded-lg text-xs font-semibold bg-white/10 text-ivory hover:bg-white/20 transition-colors">All</button>
-        <button onclick="filterEvents('free')" class="event-filter px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 text-navy-200 hover:bg-white/10 transition-colors">Free</button>
-        <button onclick="filterEvents('networking')" class="event-filter px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 text-navy-200 hover:bg-white/10 transition-colors">Networking</button>
-        <button onclick="filterEvents('workshop')" class="event-filter px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 text-navy-200 hover:bg-white/10 transition-colors">Workshops</button>
+      <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+        <a href="https://www.montgomerychamber.com/events/calendarcatgid/6" target="_blank" class="px-4 py-2 rounded-lg text-xs font-semibold" style="background:rgba(255,255,255,0.1);color:white;">Chamber Events ↗</a>
+        <a href="https://www.montgomerychamber.com/events/calendarcatgid/11" target="_blank" class="px-4 py-2 rounded-lg text-xs font-semibold" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);">Member Events ↗</a>
+        <a href="https://www.montgomerychamber.com/events/calendarcatgid/12" target="_blank" class="px-4 py-2 rounded-lg text-xs font-semibold" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);">Non-Profit Events ↗</a>
       </div>
     </div>
-
-    <div id="eventsList" class="space-y-2"></div>
+    <div class="rounded-2xl p-8 mb-6 text-center" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+      <p class="font-display text-xl font-bold mb-2">View the Full Live Calendar</p>
+      <p class="text-sm mb-5" style="color:rgba(255,255,255,0.5);">Updated weekly with dates, times, and registration links.</p>
+      <a href="https://www.montgomerychamber.com/events" target="_blank" class="inline-block px-8 py-3 rounded-lg font-semibold text-sm" style="background:var(--accent);color:#0F1F3D;">Open Full Calendar ↗</a>
+    </div>
+    <div class="grid md:grid-cols-2 gap-3">
+      <div class="rounded-xl p-5" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);">
+        <p class="text-xs uppercase tracking-wider mb-3 font-semibold" style="color:var(--accent);">Recurring Chamber Events</p>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3"><span class="text-lg">🍸</span><div><p class="text-sm font-semibold">Business After Hours</p><p class="text-xs" style="color:rgba(255,255,255,0.5);">Monthly networking mixers at rotating venues</p></div></div>
+          <div class="flex items-start gap-3"><span class="text-lg">🍳</span><div><p class="text-sm font-semibold">Power Breakfast Series</p><p class="text-xs" style="color:rgba(255,255,255,0.5);">Morning events with keynote speakers</p></div></div>
+          <div class="flex items-start gap-3"><span class="text-lg">✂️</span><div><p class="text-sm font-semibold">Ribbon Cuttings</p><p class="text-xs" style="color:rgba(255,255,255,0.5);"><a href="https://www.montgomerychamber.com/ribbon-cuttings" target="_blank" style="color:var(--accent);text-decoration:underline;">Schedule yours</a> for openings and milestones</p></div></div>
+          <div class="flex items-start gap-3"><span class="text-lg">🏛️</span><div><p class="text-sm font-semibold">Legislative Events</p><p class="text-xs" style="color:rgba(255,255,255,0.5);">Luncheons with local and state officials</p></div></div>
+        </div>
+      </div>
+      <div class="rounded-xl p-5" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);">
+        <p class="text-xs uppercase tracking-wider mb-3 font-semibold" style="color:var(--accent);">Signature Annual Events</p>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3"><span class="text-lg">⛳</span><div><p class="text-sm font-semibold">Annual Golf Classic</p><p class="text-xs" style="color:rgba(255,255,255,0.5);">Premier golf tournament and networking</p></div></div>
+          <div class="flex items-start gap-3"><span class="text-lg">🏆</span><div><p class="text-sm font-semibold">Annual Meeting & Awards</p><p class="text-xs" style="color:rgba(255,255,255,0.5);">Celebrating top businesses and leaders</p></div></div>
+          <div class="flex items-start gap-3"><span class="text-lg">👩‍💼</span><div><p class="text-sm font-semibold">Women in Business</p><p class="text-xs" style="color:rgba(255,255,255,0.5);">Roundtables, panels, and development</p></div></div>
+          <div class="flex items-start gap-3"><span class="text-lg">🚀</span><div><p class="text-sm font-semibold">Young Professionals</p><p class="text-xs" style="color:rgba(255,255,255,0.5);"><a href="https://montgomeryandyou.com/" target="_blank" style="color:var(--accent);text-decoration:underline;">Montgomery & You</a> — next-gen leaders</p></div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- DIRECTORY SEARCH -->
-<section id="directory" class="py-20 px-6">
+<!-- QUICK LINKS -->
+<section id="quicklinks" class="py-20 px-6" style="background:var(--bg-alt);">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-12">
-      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Member Directory</p>
-      <h2 class="font-display text-4xl font-bold text-navy-700">Find Fellow Members</h2>
-      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Search the directory to connect with other Montgomery businesses. Support local, hire local, partner local.</p>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase mb-2" style="color:var(--accent);">Quick Links</p>
+      <h2 class="font-display text-4xl font-bold" style="color:var(--text-heading);">Chamber Resources Hub</h2>
+      <p class="mt-3 max-w-lg mx-auto" style="color:var(--text-muted);">Direct links to the most-used member pages on montgomerychamber.com</p>
     </div>
+    <div id="qlGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+  </div>
+</section>
 
-    <div class="max-w-2xl mx-auto mb-8">
+<!-- DIRECTORY -->
+<section id="directory" class="py-20 px-6" style="background:var(--bg-body);">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10">
+      <p class="font-mono text-xs tracking-[0.25em] uppercase mb-2" style="color:var(--accent);">Member Directory</p>
+      <h2 class="font-display text-4xl font-bold" style="color:var(--text-heading);">Find Fellow Members</h2>
+      <p class="mt-3 max-w-lg mx-auto" style="color:var(--text-muted);">Search the full directory on the official site, or browse sample listings below.</p>
+    </div>
+    <div class="max-w-2xl mx-auto mb-8 text-center flex flex-wrap justify-center gap-3">
+      <a href="https://www.montgomerychamber.com/list" target="_blank" class="inline-block px-8 py-3 rounded-lg font-semibold text-sm shadow-lg" style="background:var(--navy);color:var(--text-on-dark);">Search Official Directory ↗</a>
+      <a href="https://www.montgomerychamber.com/membertomember/" target="_blank" class="inline-block px-8 py-3 rounded-lg font-semibold text-sm border" style="color:var(--text-body);border-color:var(--border);">Member Deals ↗</a>
+    </div>
+    <div class="max-w-2xl mx-auto">
       <div class="relative">
-        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input type="text" id="directorySearch" placeholder="Search by name, industry, or keyword…" class="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-navy-50 text-navy-600 placeholder:text-navy-200 focus:outline-none search-glow font-body text-sm" oninput="searchDirectory(this.value)">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--text-faint);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="dirSearch" placeholder="Search sample listings…" class="w-full pl-12 pr-4 py-4 rounded-xl text-sm search-glow" style="background:var(--bg-input);border:1px solid var(--border);color:var(--text-heading);" oninput="searchDir(this.value)">
       </div>
-      <div class="flex gap-2 mt-3 flex-wrap">
-        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Restaurant')">Restaurant</button>
-        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Legal')">Legal</button>
-        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Technology')">Technology</button>
-        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Healthcare')">Healthcare</button>
-        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Finance')">Finance</button>
-        <button class="dir-tag px-3 py-1.5 rounded-full text-xs font-medium bg-parchment text-navy-400 hover:bg-gold-100 hover:text-gold-600 transition-colors" onclick="searchDirectory('Construction')">Construction</button>
-      </div>
+      <div class="flex gap-2 mt-3 flex-wrap" id="dirTags"></div>
     </div>
-
-    <div id="directoryResults" class="grid md:grid-cols-2 gap-3 max-w-2xl mx-auto"></div>
+    <div id="dirResults" class="grid md:grid-cols-2 gap-3 max-w-2xl mx-auto mt-4"></div>
   </div>
 </section>
 
-<!-- RESOURCES -->
-<section id="resources" class="py-20 px-6 bg-parchment">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-12">
-      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Member Resources</p>
-      <h2 class="font-display text-4xl font-bold text-navy-700">Tools & Downloads</h2>
-      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Exclusive resources available only to Montgomery Chamber members. Download guides, templates, and more.</p>
-    </div>
-
-    <div id="resourcesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-  </div>
-</section>
-
-<!-- NEW MEMBER CHECKLIST -->
-<section id="checklist" class="py-20 px-6">
+<!-- CHECKLIST -->
+<section id="checklist" class="py-20 px-6" style="background:var(--bg-card);border-top:1px solid var(--border);">
   <div class="max-w-3xl mx-auto">
     <div class="text-center mb-12">
-      <p class="text-gold-400 font-mono text-xs tracking-[0.25em] uppercase mb-2">Get Started</p>
-      <h2 class="font-display text-4xl font-bold text-navy-700">New Member Checklist</h2>
-      <p class="text-navy-300 mt-3 max-w-lg mx-auto">Complete these steps to make sure you're getting the most from your membership from day one.</p>
+      <p class="font-mono text-xs tracking-[0.25em] uppercase mb-2" style="color:var(--accent);">Get Started</p>
+      <h2 class="font-display text-4xl font-bold" style="color:var(--text-heading);">New Member Checklist</h2>
+      <p class="mt-3 max-w-lg mx-auto" style="color:var(--text-muted);">Complete these steps to maximize your membership from day one.</p>
     </div>
-
-    <!-- Progress -->
     <div class="mb-8">
       <div class="flex justify-between items-center mb-2">
-        <span class="text-sm font-semibold text-navy-500" id="checkProgress">0 of 8 completed</span>
-        <span class="text-sm font-mono text-gold-400" id="checkPercent">0%</span>
+        <span class="text-sm font-semibold" id="ckProg" style="color:var(--text-body);">0 of 10</span>
+        <span class="text-sm font-mono" id="ckPct" style="color:var(--accent);">0%</span>
       </div>
-      <div class="w-full h-2 bg-navy-50 rounded-full overflow-hidden">
-        <div id="checkBar" class="h-full bg-gradient-to-r from-gold-300 to-gold-400 rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+      <div class="w-full h-2 rounded-full overflow-hidden" style="background:var(--progress-track);">
+        <div id="ckBar" class="h-full rounded-full" style="background:linear-gradient(to right,var(--accent),var(--accent-hover));width:0%;transition:width .7s ease;"></div>
       </div>
     </div>
-
-    <div id="checklistItems" class="space-y-2"></div>
-
-    <div id="checklistComplete" class="hidden mt-8 text-center p-8 bg-gold-50 rounded-2xl border border-gold-100">
+    <div id="ckItems" class="space-y-2"></div>
+    <div id="ckDone" class="hidden mt-8 text-center p-8 rounded-2xl" style="background:var(--accent-bg);border:1px solid var(--accent-border);">
       <div class="text-4xl mb-3">🎉</div>
-      <h3 class="font-display text-2xl font-bold text-navy-700">You're All Set!</h3>
-      <p class="text-navy-300 mt-2 text-sm">You've completed the new member checklist. Welcome to the Montgomery business community!</p>
+      <h3 class="font-display text-2xl font-bold" style="color:var(--text-heading);">You're All Set!</h3>
+      <p class="mt-2 text-sm" style="color:var(--text-muted);">Welcome to the Montgomery business community!</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-navy-700 text-ivory py-16 px-6">
+<footer class="py-16 px-6" style="background:var(--footer-bg);color:white;">
   <div class="max-w-7xl mx-auto">
     <div class="grid md:grid-cols-4 gap-10 mb-12">
       <div class="md:col-span-2">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-            <span class="text-gold-300 font-display font-bold text-sm">MC</span>
-          </div>
-          <div>
-            <div class="font-display font-bold text-sm tracking-wide">MONTGOMERY</div>
-            <div class="text-[10px] tracking-[0.2em] text-navy-200 uppercase">Chamber of Commerce</div>
-          </div>
+        <a href="https://www.montgomerychamber.com/" target="_blank" class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(255,255,255,0.1);"><span class="font-display font-bold text-sm" style="color:var(--accent);">MC</span></div>
+          <div><div class="font-display font-bold text-sm tracking-wide">MONTGOMERY</div><div class="text-[10px] tracking-[0.2em] uppercase" style="color:rgba(255,255,255,0.4);">Chamber of Commerce</div></div>
+        </a>
+        <p class="text-sm leading-relaxed max-w-sm" style="color:rgba(255,255,255,0.5);">Empowering Montgomery businesses. Your membership fuels economic growth, community development, and business success across the River Region.</p>
+        <div class="flex gap-3 mt-5">
+          <a href="https://www.montgomerychamber.com/member/newmemberapp/" target="_blank" class="px-5 py-2 rounded-lg text-xs font-semibold" style="background:var(--accent);color:#0F1F3D;">Become a Member ↗</a>
+          <a href="https://www.montgomerychamber.com/login/" target="_blank" class="px-5 py-2 rounded-lg text-xs font-semibold" style="background:rgba(255,255,255,0.1);color:white;">Member Login ↗</a>
         </div>
-        <p class="text-navy-200 text-sm leading-relaxed max-w-sm">Empowering Montgomery businesses since 1873. Your membership fuels economic growth, community development, and business success across the River Region.</p>
       </div>
       <div>
-        <h4 class="font-semibold text-sm mb-4 text-gold-300 tracking-wide uppercase text-xs">Contact</h4>
-        <div class="space-y-2 text-sm text-navy-200">
-          <p>41 Commerce Street</p>
-          <p>Montgomery, AL 36104</p>
+        <h4 class="text-xs font-semibold mb-4 tracking-wide uppercase" style="color:var(--accent);">Contact</h4>
+        <div class="space-y-2 text-sm" style="color:rgba(255,255,255,0.5);">
+          <p>41 Commerce Street</p><p>Montgomery, AL 36104</p>
           <p class="mt-3">(334) 834-5200</p>
-          <p>info@montgomerychamber.com</p>
+          <a href="https://www.montgomerychamber.com/contact/" target="_blank" class="block mt-1" style="color:var(--accent);">Contact Form ↗</a>
         </div>
       </div>
       <div>
-        <h4 class="font-semibold text-sm mb-4 text-gold-300 tracking-wide uppercase text-xs">Hours</h4>
-        <div class="space-y-2 text-sm text-navy-200">
-          <p>Monday – Friday</p>
-          <p>8:00 AM – 5:00 PM</p>
-          <p class="mt-3 text-navy-300 italic">Closed on major holidays</p>
+        <h4 class="text-xs font-semibold mb-4 tracking-wide uppercase" style="color:var(--accent);">Explore</h4>
+        <div class="space-y-2 text-sm" style="color:rgba(255,255,255,0.5);">
+          <a href="https://experiencemontgomeryal.org/" target="_blank" class="block" style="color:rgba(255,255,255,0.5);">Experience Montgomery ↗</a>
+          <a href="https://www.techmgm.com/" target="_blank" class="block" style="color:rgba(255,255,255,0.5);">TechMGM ↗</a>
+          <a href="https://montgomeryandyou.com/" target="_blank" class="block" style="color:rgba(255,255,255,0.5);">Montgomery & You ↗</a>
+          <a href="https://www.montgomerychamber.com/jobs/" target="_blank" class="block" style="color:rgba(255,255,255,0.5);">Job Board ↗</a>
+          <a href="https://www.montgomerychamber.com/news/" target="_blank" class="block" style="color:rgba(255,255,255,0.5);">News & Media ↗</a>
         </div>
       </div>
     </div>
-    <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-xs text-navy-300">© 2026 Montgomery Area Chamber of Commerce. All rights reserved.</p>
-      <p class="text-xs text-navy-400">This is a membership utility tool — not the official chamber website.</p>
+    <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-4" style="border-top:1px solid rgba(255,255,255,0.08);">
+      <p class="text-xs" style="color:rgba(255,255,255,0.3);">© 2026 Montgomery Area Chamber of Commerce</p>
+      <p class="text-xs" style="color:rgba(255,255,255,0.2);">Membership utility — visit <a href="https://www.montgomerychamber.com/" target="_blank" style="color:rgba(255,255,255,0.4);text-decoration:underline;">montgomerychamber.com</a></p>
     </div>
   </div>
 </footer>
 
 <script>
-// ─── DATA ──────────────────────────────────────────────────
-const roiItems = [
-  { name: 'Business Directory Listing', value: 250, used: false },
-  { name: 'Networking Events (avg 10/yr)', value: 800, used: false },
-  { name: 'Member-to-Member Discounts', value: 500, used: false },
-  { name: 'Social Media Promotion', value: 300, used: false },
-  { name: 'Ribbon Cutting Ceremony', value: 400, used: false },
-  { name: 'Newsletter Advertising', value: 350, used: false },
-  { name: 'Legislative Advocacy', value: 600, used: false },
-  { name: 'Business Workshop Access', value: 450, used: false },
-  { name: 'Referral Program', value: 700, used: false },
+// DATA
+const roiItems=[
+  {name:'Business Directory Listing',value:250,used:false},{name:'Networking Events (avg 10/yr)',value:800,used:false},
+  {name:'Member-to-Member Deals',value:500,used:false},{name:'Social Media Promotion',value:300,used:false},
+  {name:'Ribbon Cutting Ceremony',value:400,used:false},{name:'Newsletter/Press Coverage',value:350,used:false},
+  {name:'Legislative Advocacy',value:600,used:false},{name:'Workshop & Seminar Access',value:450,used:false},
+  {name:'Referral / Ambassador Program',value:700,used:false}
 ];
 
-const benefits = [
-  { title:'Networking Events', desc:'Monthly mixers, luncheons, and Business After Hours at premier Montgomery venues.', icon:'🤝', category:'networking', tip:'Attend at least 3 events/quarter to maximize connections.' },
-  { title:'Business Directory', desc:'Searchable online listing seen by thousands of residents and visitors each month.', icon:'📒', category:'marketing', tip:'Add keywords and a photo to boost your listing by 3x.' },
-  { title:'Ribbon Cuttings', desc:'Celebrate milestones with a public ceremony, press coverage, and social media spotlight.', icon:'✂️', category:'marketing', tip:'Available for openings, expansions, and anniversaries.' },
-  { title:'Member Discounts', desc:'Exclusive savings on office supplies, insurance, shipping, marketing services, and more.', icon:'💰', category:'savings', tip:'UPS savings alone can pay for your membership.' },
-  { title:'Legislative Advocacy', desc:'Your voice at city hall and the State Capitol through our Government Affairs team.', icon:'🏛️', category:'advocacy', tip:'Join a policy committee to amplify your influence.' },
-  { title:'Workshops & Seminars', desc:'Free and low-cost training on marketing, hiring, finance, and leadership.', icon:'📚', category:'networking', tip:'Check the calendar monthly—new topics rotate quarterly.' },
-  { title:'Referral Network', desc:'Get matched with other members when customers request recommendations.', icon:'🔗', category:'networking', tip:'Complete your profile to appear in referral searches.' },
-  { title:'Social Media Exposure', desc:'Featured posts, story takeovers, and tagged content across Chamber platforms.', icon:'📱', category:'marketing', tip:'Tag @MontgomeryChamber for repost opportunities.' },
-  { title:'Insurance Programs', desc:'Group rates on health, dental, and liability insurance for small businesses.', icon:'🛡️', category:'savings', tip:'Compare rates—members save an average of 15% annually.' },
-  { title:'Hot Deals Program', desc:'Offer exclusive deals to other members and their employees.', icon:'🔥', category:'savings', tip:'Running a Hot Deal averages 30+ new customer visits.' },
-  { title:'Committee Involvement', desc:'Join a committee and help shape community and economic development initiatives.', icon:'🗳️', category:'advocacy', tip:'Leadership committee spots fill fast—apply early.' },
-  { title:'Business Awards', desc:'Nomination eligibility for Small Business of the Year and other Chamber honors.', icon:'🏆', category:'marketing', tip:'Past winners report a 20% increase in brand recognition.' },
+const benefits=[
+  {title:'Networking Events',desc:'Monthly mixers, Business After Hours, luncheons, and the Annual Golf Classic.',icon:'🤝',cat:'networking',tip:'Attend 3+ events/quarter for maximum connections.',link:'https://www.montgomerychamber.com/events/calendarcatgid/6'},
+  {title:'Business Directory',desc:'Searchable online listing seen by thousands of residents and visitors.',icon:'📒',cat:'marketing',tip:'Add keywords and photos to boost visibility.',link:'https://www.montgomerychamber.com/list'},
+  {title:'Ribbon Cuttings',desc:'Celebrate milestones with ceremony, press coverage, and Ambassador support.',icon:'✂️',cat:'marketing',tip:'Available for openings, expansions, and anniversaries.',link:'https://www.montgomerychamber.com/ribbon-cuttings'},
+  {title:'Member-to-Member Deals',desc:'Exclusive savings from fellow Chamber members across the region.',icon:'💰',cat:'savings',tip:'Browse deals or submit your own to attract customers.',link:'https://www.montgomerychamber.com/member-discount-program'},
+  {title:'Legislative Advocacy',desc:'Your voice at City Hall and the Alabama State Capitol.',icon:'🏛️',cat:'advocacy',tip:'Join a policy committee to amplify your influence.',link:'https://www.montgomerychamber.com/advocacy'},
+  {title:'Workshops & Seminars',desc:'Free and low-cost training on marketing, hiring, finance, and leadership.',icon:'📚',cat:'networking',tip:'New topics rotate quarterly — check the calendar monthly.',link:'https://www.montgomerychamber.com/events/calendarcatgid/6'},
+  {title:'Ambassador Program',desc:'Seasoned members help you integrate, connect, and grow within the Chamber.',icon:'🔗',cat:'networking',tip:'Ambassadors attend ribbon cuttings and welcome new members.',link:'https://www.montgomerychamber.com/ambassador-program'},
+  {title:'News & Media Exposure',desc:'Press releases, member news, social spotlights, and Montgomery Business Journal.',icon:'📱',cat:'marketing',tip:'Submit announcements to the Chamber newsroom.',link:'https://www.montgomerychamber.com/news/'},
+  {title:'Small Business Resources',desc:'Guides, toolkits, and connections for entrepreneurs and SMB owners.',icon:'🧰',cat:'savings',tip:'Includes links to AIDT, Trenholm State, and SBA resources.',link:'https://www.montgomerychamber.com/small-business-resources'},
+  {title:'Invite. Ignite.',desc:'Refer new members and earn rewards while strengthening the community.',icon:'🔥',cat:'savings',tip:'Active referrers gain recognition and special benefits.',link:'https://www.montgomerychamber.com/invite-ignite'},
+  {title:'Committee Involvement',desc:'Join committees shaping economic development, military affairs, and workforce.',icon:'🗳️',cat:'advocacy',tip:'Leadership spots fill fast — apply early.',link:'https://www.montgomerychamber.com/about-us'},
+  {title:'Young Professionals',desc:'Montgomery & You connects next-gen leaders through events and programs.',icon:'🚀',cat:'networking',tip:'Great for employees under 40 building their network.',link:'https://montgomeryandyou.com/'}
 ];
 
-const events = [
-  { name:'Business After Hours', date:'Apr 3, 2026', time:'5:30 PM', location:'Renaissance Hotel', type:'networking', free:true },
-  { name:'Small Business Workshop: Digital Marketing', date:'Apr 10, 2026', time:'9:00 AM', location:'Chamber Boardroom', type:'workshop', free:true },
-  { name:'Legislative Luncheon', date:'Apr 17, 2026', time:'11:30 AM', location:'Embassy Suites', type:'networking', free:false, price:'$35' },
-  { name:'Women in Business Roundtable', date:'Apr 22, 2026', time:'8:00 AM', location:'Hyatt Place', type:'networking', free:true },
-  { name:'Cybersecurity for Small Business', date:'May 1, 2026', time:'2:00 PM', location:'Virtual (Zoom)', type:'workshop', free:true },
-  { name:'Annual Golf Classic', date:'May 8, 2026', time:'7:30 AM', location:'Wynlakes Golf Club', type:'networking', free:false, price:'$150' },
-  { name:'New Member Orientation', date:'May 14, 2026', time:'10:00 AM', location:'Chamber Office', type:'workshop', free:true },
-  { name:'Economic Forecast Breakfast', date:'May 21, 2026', time:'7:30 AM', location:'Renaissance Hotel', type:'networking', free:false, price:'$45' },
+const quickLinks=[
+  {title:'Value & Benefits',desc:'Full overview of membership perks.',icon:'⭐',url:'https://www.montgomerychamber.com/value-benefits'},
+  {title:'Chamber Events',desc:'Official networking and workshops.',icon:'📅',url:'https://www.montgomerychamber.com/events/calendarcatgid/6'},
+  {title:'Member Events',desc:'Events hosted by fellow members.',icon:'🎪',url:'https://www.montgomerychamber.com/events/calendarcatgid/11'},
+  {title:'Business Directory',desc:'Search all member businesses.',icon:'🔍',url:'https://www.montgomerychamber.com/list'},
+  {title:'Member Deals',desc:'Exclusive discounts between members.',icon:'💲',url:'https://www.montgomerychamber.com/membertomember/'},
+  {title:'Ribbon Cuttings',desc:'Schedule a milestone ceremony.',icon:'✂️',url:'https://www.montgomerychamber.com/ribbon-cuttings'},
+  {title:'Member Login',desc:'Manage your account and listing.',icon:'🔐',url:'https://www.montgomerychamber.com/login/'},
+  {title:'Become a Member',desc:'Apply for membership online.',icon:'🤝',url:'https://www.montgomerychamber.com/member/newmemberapp/'},
+  {title:'Small Business Resources',desc:'Guides and tools for SMBs.',icon:'🧰',url:'https://www.montgomerychamber.com/small-business-resources'},
+  {title:'Ambassador Program',desc:'Learn about Chamber Ambassadors.',icon:'🎖️',url:'https://www.montgomerychamber.com/ambassador-program'},
+  {title:'Job Board',desc:'Post openings and find talent.',icon:'💼',url:'https://www.montgomerychamber.com/jobs/'},
+  {title:'News & Press',desc:'Latest announcements and releases.',icon:'📰',url:'https://www.montgomerychamber.com/news/'},
+  {title:'TechMGM',desc:'Innovation and tech initiatives.',icon:'💡',url:'https://www.techmgm.com/'},
+  {title:'Experience Montgomery',desc:'Tourism, dining, and events.',icon:'🎭',url:'https://experiencemontgomeryal.org/'},
+  {title:'Legislative Advocacy',desc:'Policy positions and officials.',icon:'🏛️',url:'https://www.montgomerychamber.com/advocacy'},
+  {title:'Data & Demographics',desc:'Economic data for the region.',icon:'📊',url:'https://www.montgomerychamber.com/data-and-demographics'}
 ];
 
-const directoryEntries = [
-  { name:'River Region Dental', industry:'Healthcare', desc:'Family & cosmetic dentistry in East Montgomery.' },
-  { name:'Capital City Legal Group', industry:'Legal', desc:'Business law, real estate, and estate planning.' },
-  { name:'Montgomery Tech Solutions', industry:'Technology', desc:'IT services, cybersecurity, and cloud computing.' },
-  { name:'Southern Roots Café', industry:'Restaurant', desc:'Farm-to-table Southern cuisine on Dexter Avenue.' },
-  { name:'Tri-Star Construction', industry:'Construction', desc:'Commercial and residential construction since 1998.' },
-  { name:'Jubilee Financial Advisors', industry:'Finance', desc:'Wealth management and retirement planning.' },
-  { name:'Alabama Robotics Inc.', industry:'Technology', desc:'Industrial automation and robotics integration.' },
-  { name:'Heritage Health Clinic', industry:'Healthcare', desc:'Primary care and urgent care in Eastchase.' },
-  { name:'Magnolia Marketing Co.', industry:'Marketing', desc:'Digital strategy, branding, and social media.' },
-  { name:'Cornerstone CPA', industry:'Finance', desc:'Tax preparation, bookkeeping, and CFO services.' },
-  { name:'Prattville Lumber & Supply', industry:'Construction', desc:'Building materials and contractor supply.' },
-  { name:'The Taco Mama', industry:'Restaurant', desc:'Casual Tex-Mex with locations across the Gump.' },
+const dirEntries=[
+  {name:'River Region Dental',ind:'Healthcare'},{name:'Capital City Legal Group',ind:'Legal'},
+  {name:'Montgomery Tech Solutions',ind:'Technology'},{name:'Southern Roots Café',ind:'Restaurant'},
+  {name:'Tri-Star Construction',ind:'Construction'},{name:'Jubilee Financial Advisors',ind:'Finance'},
+  {name:'Alabama Robotics Inc.',ind:'Technology'},{name:'Heritage Health Clinic',ind:'Healthcare'},
+  {name:'Magnolia Marketing Co.',ind:'Marketing'},{name:'Cornerstone CPA',ind:'Finance'},
+  {name:'Prattville Lumber & Supply',ind:'Construction'},{name:'The Taco Mama',ind:'Restaurant'}
 ];
 
-const resources = [
-  { title:'Member Benefits Guide', type:'PDF', icon:'📄', desc:'Complete overview of all membership perks.' },
-  { title:'Logo & Badge Pack', type:'ZIP', icon:'🎨', desc:'Chamber member badges for your website & emails.' },
-  { title:'Event Calendar 2026', type:'PDF', icon:'📅', desc:'Full year of Chamber events and deadlines.' },
-  { title:'Business Toolkit', type:'PDF', icon:'🧰', desc:'Templates for plans, pitches, and marketing.' },
-  { title:'Legislative Priorities', type:'PDF', icon:'📋', desc:'Current policy positions and advocacy agenda.' },
-  { title:'Discount Directory', type:'PDF', icon:'💲', desc:'All member-to-member savings in one place.' },
-  { title:'New Member Welcome Kit', type:'PDF', icon:'🎁', desc:'Everything you need to hit the ground running.' },
-  { title:'Social Media Graphics', type:'ZIP', icon:'📸', desc:'Ready-to-post graphics with Chamber branding.' },
+const ckSteps=[
+  {text:'Log in to your member account',tip:'Access your dashboard.',link:'https://www.montgomerychamber.com/login/'},
+  {text:'Complete your business profile',tip:'Add logo, hours, and contact info.',link:'https://www.montgomerychamber.com/list'},
+  {text:'Request your 2026 member decal',tip:'Display it on your door or desk.',link:'https://www.montgomerychamber.com/value-benefits'},
+  {text:'Browse the Chamber Events calendar',tip:'Find your first event to attend.',link:'https://www.montgomerychamber.com/events/calendarcatgid/6'},
+  {text:'Review Member-to-Member deals',tip:'See savings and submit your own.',link:'https://www.montgomerychamber.com/membertomember/'},
+  {text:'Attend your first networking event',tip:'Business After Hours is the best start.',link:'https://www.montgomerychamber.com/events'},
+  {text:'Schedule a ribbon cutting',tip:'Free PR for openings and milestones.',link:'https://www.montgomerychamber.com/ribbon-cuttings'},
+  {text:'Learn about the Ambassador Program',tip:'Ambassadors welcome and support members.',link:'https://www.montgomerychamber.com/ambassador-program'},
+  {text:'Explore Invite. Ignite.',tip:'Refer new members and earn rewards.',link:'https://www.montgomerychamber.com/invite-ignite'},
+  {text:'Join a committee or task force',tip:'Deepens relationships and visibility.',link:'https://www.montgomerychamber.com/about-us'}
 ];
 
-const checklistSteps = [
-  { text:'Complete your online business profile', tip:'Add your logo, description, hours, and contact info.' },
-  { text:'Download the Chamber member badge', tip:'Display it on your website and email signature.' },
-  { text:'Attend your first Business After Hours', tip:'Best networking ROI of any Chamber event.' },
-  { text:'Register for a workshop or seminar', tip:'Free professional development included in your dues.' },
-  { text:'Review and activate your member discounts', tip:'UPS, insurance, and office supply savings add up fast.' },
-  { text:'Submit a Hot Deal for other members', tip:'Great way to get 30+ new customers quickly.' },
-  { text:'Schedule a ribbon cutting or milestone event', tip:'Free PR and social media coverage included.' },
-  { text:'Join a committee or task force', tip:'Deepens relationships and raises your profile.' },
-];
-
-// ─── RENDER FUNCTIONS ──────────────────────────────────────
-
-function renderROI() {
-  const grid = document.getElementById('roiGrid');
-  grid.innerHTML = roiItems.map((item, i) => `
-    <button onclick="toggleROI(${i})" class="flex items-center justify-between p-4 rounded-xl border transition-all text-left ${item.used ? 'bg-gold-50 border-gold-200' : 'bg-white border-navy-50 hover:border-gold-200'}">
+// RENDERS
+function renderROI(){
+  const g=document.getElementById('roiGrid');
+  g.innerHTML=roiItems.map((it,i)=>`
+    <button onclick="toggleROI(${i})" class="flex items-center justify-between p-4 rounded-xl border text-left" style="background:${it.used?'var(--roi-on-bg)':'var(--bg-elevated)'};border-color:${it.used?'var(--roi-on-border)':'var(--border)'};">
       <div class="flex items-center gap-3">
-        <div class="w-6 h-6 rounded-md flex items-center justify-center ${item.used ? 'bg-gold-300 text-white' : 'bg-navy-50 text-navy-200'}">
-          ${item.used ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : ''}
+        <div class="w-6 h-6 rounded-md flex items-center justify-center" style="background:${it.used?'var(--accent)':'var(--roi-off-bg)'};color:${it.used?'white':'transparent'};">
+          ${it.used?'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>':''}
         </div>
-        <span class="text-sm font-medium ${item.used ? 'text-navy-600' : 'text-navy-400'}">${item.name}</span>
+        <span class="text-sm font-medium" style="color:${it.used?'var(--text-body)':'var(--text-muted)'};">${it.name}</span>
       </div>
-      <span class="font-mono text-sm ${item.used ? 'text-gold-500 font-semibold' : 'text-navy-200'}">$${item.value}</span>
-    </button>
-  `).join('');
-  updateROITotal();
+      <span class="font-mono text-sm" style="color:${it.used?'var(--accent)':'var(--text-faint)'};font-weight:${it.used?600:400};">$${it.value}</span>
+    </button>`).join('');
+  document.getElementById('totalValue').textContent='$'+roiItems.filter(i=>i.used).reduce((s,i)=>s+i.value,0).toLocaleString();
 }
+function toggleROI(i){roiItems[i].used=!roiItems[i].used;renderROI();}
 
-function toggleROI(i) {
-  roiItems[i].used = !roiItems[i].used;
-  renderROI();
-}
-
-function updateROITotal() {
-  const total = roiItems.filter(i => i.used).reduce((s, i) => s + i.value, 0);
-  document.getElementById('totalValue').textContent = '$' + total.toLocaleString();
-}
-
-function renderBenefits(filter = 'all') {
-  const grid = document.getElementById('benefitsGrid');
-  const filtered = filter === 'all' ? benefits : benefits.filter(b => b.category === filter);
-  grid.innerHTML = filtered.map(b => `
-    <div class="benefit-card bg-white rounded-2xl p-6" data-category="${b.category}">
+function renderBen(f='all'){
+  const g=document.getElementById('benGrid');
+  const list=f==='all'?benefits:benefits.filter(b=>b.cat===f);
+  g.innerHTML=list.map(b=>{
+    const ts=b.cat==='networking'?'var(--tag-net-bg);color:var(--tag-net)':b.cat==='marketing'?'var(--tag-mkt-bg);color:var(--tag-mkt)':b.cat==='savings'?'var(--tag-sav-bg);color:var(--tag-sav)':'var(--tag-adv-bg);color:var(--tag-adv)';
+    return `<div class="benefit-card rounded-2xl p-6">
       <div class="flex items-start justify-between mb-4">
         <span class="text-3xl">${b.icon}</span>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
-          b.category === 'networking' ? 'bg-navy-50 text-navy-400' :
-          b.category === 'marketing' ? 'bg-clay-50 text-clay-400' :
-          b.category === 'savings' ? 'bg-gold-50 text-gold-500' :
-          'bg-green-50 text-green-600'
-        }">${b.category}</span>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider" style="background:${ts}">${b.cat}</span>
       </div>
-      <h3 class="font-display text-lg font-bold text-navy-700 mb-2">${b.title}</h3>
-      <p class="text-sm text-navy-300 leading-relaxed mb-4">${b.desc}</p>
-      <div class="flex items-start gap-2 p-3 rounded-lg bg-gold-50/60 border border-gold-100/60">
-        <span class="text-gold-400 text-xs mt-0.5">💡</span>
-        <p class="text-xs text-gold-600 leading-relaxed">${b.tip}</p>
+      <h3 class="font-display text-lg font-bold mb-2" style="color:var(--text-heading);">${b.title}</h3>
+      <p class="text-sm leading-relaxed mb-4" style="color:var(--text-muted);">${b.desc}</p>
+      <div class="flex items-start gap-2 p-3 rounded-lg mb-3" style="background:var(--tip-bg);border:1px solid var(--tip-border);">
+        <span class="text-xs mt-0.5">💡</span>
+        <p class="text-xs leading-relaxed" style="color:var(--accent-text);">${b.tip}</p>
       </div>
-    </div>
-  `).join('');
-}
-
-function filterBenefits(category, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderBenefits(category);
-}
-
-function renderEvents(filter = 'all') {
-  const list = document.getElementById('eventsList');
-  let filtered = events;
-  if (filter === 'free') filtered = events.filter(e => e.free);
-  else if (filter === 'networking') filtered = events.filter(e => e.type === 'networking');
-  else if (filter === 'workshop') filtered = events.filter(e => e.type === 'workshop');
-
-  list.innerHTML = filtered.map(e => `
-    <div class="event-row flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl bg-white/5 cursor-default">
-      <div class="flex items-center gap-4">
-        <div class="hidden md:flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-white/10">
-          <span class="text-[10px] uppercase text-gold-300 font-semibold">${e.date.split(' ')[0]}</span>
-          <span class="text-xl font-bold text-ivory leading-none">${e.date.split(' ')[1].replace(',','')}</span>
-        </div>
-        <div>
-          <h4 class="font-semibold text-ivory text-sm">${e.name}</h4>
-          <p class="text-navy-200 text-xs mt-0.5">${e.date} · ${e.time} · ${e.location}</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3 mt-3 md:mt-0">
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${e.type === 'networking' ? 'bg-white/10 text-gold-200' : 'bg-white/10 text-sky-300'}">${e.type}</span>
-        <span class="px-3 py-1 rounded-lg text-xs font-semibold ${e.free ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/10 text-ivory'}">${e.free ? 'Free' : e.price + ' members'}</span>
-      </div>
-    </div>
-  `).join('');
-}
-
-function filterEvents(type) {
-  document.querySelectorAll('.event-filter').forEach(b => {
-    b.classList.remove('active', 'bg-white/10', 'text-ivory');
-    b.classList.add('bg-white/5', 'text-navy-200');
-  });
-  event.target.classList.add('active', 'bg-white/10', 'text-ivory');
-  event.target.classList.remove('bg-white/5', 'text-navy-200');
-  renderEvents(type);
-}
-
-function searchDirectory(query) {
-  document.getElementById('directorySearch').value = query;
-  const results = document.getElementById('directoryResults');
-  const q = query.toLowerCase();
-  const filtered = q ? directoryEntries.filter(e =>
-    e.name.toLowerCase().includes(q) || e.industry.toLowerCase().includes(q) || e.desc.toLowerCase().includes(q)
-  ) : directoryEntries;
-
-  results.innerHTML = filtered.length ? filtered.map(e => `
-    <div class="flex items-start gap-4 p-4 bg-white rounded-xl border border-navy-50 hover:border-gold-200 transition-colors">
-      <div class="w-10 h-10 rounded-lg bg-navy-500 flex items-center justify-center flex-shrink-0">
-        <span class="text-gold-300 font-display font-bold text-xs">${e.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
-      </div>
-      <div>
-        <h4 class="font-semibold text-navy-700 text-sm">${e.name}</h4>
-        <p class="text-xs text-gold-500 font-medium">${e.industry}</p>
-        <p class="text-xs text-navy-300 mt-1">${e.desc}</p>
-      </div>
-    </div>
-  `).join('') : '<p class="text-center text-navy-300 text-sm col-span-2 py-8">No results found. Try a different search term.</p>';
-}
-
-function renderResources() {
-  const grid = document.getElementById('resourcesGrid');
-  grid.innerHTML = resources.map(r => `
-    <div class="bg-white rounded-xl p-5 border border-navy-50 hover:border-gold-200 hover:shadow-lg hover:shadow-gold-100/20 transition-all group cursor-pointer">
-      <div class="flex items-start justify-between mb-3">
-        <span class="text-2xl">${r.icon}</span>
-        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-navy-50 text-navy-400">${r.type}</span>
-      </div>
-      <h4 class="font-semibold text-navy-700 text-sm mb-1">${r.title}</h4>
-      <p class="text-xs text-navy-300 leading-relaxed mb-4">${r.desc}</p>
-      <div class="flex items-center gap-1 text-gold-400 text-xs font-semibold group-hover:text-gold-500 transition-colors">
-        <span>Download</span>
-        <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderChecklist() {
-  const container = document.getElementById('checklistItems');
-  const completed = JSON.parse(localStorage.getItem('mgm_checklist') || '[]');
-
-  container.innerHTML = checklistSteps.map((step, i) => {
-    const done = completed.includes(i);
-    return `
-    <div class="check-item ${done ? 'completed' : ''} flex items-start gap-4 p-4 rounded-xl bg-white border border-navy-50 hover:border-gold-200 transition-all cursor-pointer" onclick="toggleCheck(${i})">
-      <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 ${done ? 'bg-gold-300 text-white' : 'bg-navy-50 border border-navy-100'}">
-        ${done ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : ''}
-      </div>
-      <div class="flex-1">
-        <p class="check-text text-sm font-medium text-navy-600">${step.text}</p>
-        <p class="text-xs text-navy-300 mt-1">${step.tip}</p>
-      </div>
-      <span class="font-mono text-xs text-navy-200 mt-1">${i + 1}/8</span>
+      <a href="${b.link}" target="_blank" class="text-xs font-semibold flex items-center gap-1" style="color:var(--accent);">Learn more ↗</a>
     </div>`;
   }).join('');
+}
+function filterBen(c,btn){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderBen(c);}
 
-  updateCheckProgress(completed);
+function renderQL(){
+  document.getElementById('qlGrid').innerHTML=quickLinks.map(q=>`
+    <a href="${q.url}" target="_blank" class="block rounded-xl p-5 group" style="background:var(--bg-elevated);border:1px solid var(--border);">
+      <div class="flex items-start justify-between mb-3">
+        <span class="text-2xl">${q.icon}</span>
+        <svg class="w-4 h-4 opacity-0 group-hover:opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--text-muted);transition:opacity .2s;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </div>
+      <h4 class="font-semibold text-sm mb-1" style="color:var(--text-heading);">${q.title}</h4>
+      <p class="text-xs leading-relaxed" style="color:var(--text-muted);">${q.desc}</p>
+    </a>`).join('');
 }
 
-function toggleCheck(i) {
-  let completed = JSON.parse(localStorage.getItem('mgm_checklist') || '[]');
-  if (completed.includes(i)) completed = completed.filter(x => x !== i);
-  else completed.push(i);
-  localStorage.setItem('mgm_checklist', JSON.stringify(completed));
-  renderChecklist();
+function searchDir(q){
+  document.getElementById('dirSearch').value=q;
+  const ql=q.toLowerCase();
+  const f=ql?dirEntries.filter(e=>e.name.toLowerCase().includes(ql)||e.ind.toLowerCase().includes(ql)):dirEntries;
+  document.getElementById('dirResults').innerHTML=f.length?f.map(e=>`
+    <div class="flex items-start gap-4 p-4 rounded-xl" style="background:var(--bg-elevated);border:1px solid var(--border);">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--navy);"><span class="font-display font-bold text-xs" style="color:var(--accent);">${e.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</span></div>
+      <div><h4 class="font-semibold text-sm" style="color:var(--text-heading);">${e.name}</h4><p class="text-xs font-medium" style="color:var(--accent);">${e.ind}</p></div>
+    </div>`).join(''):`<p class="text-center text-sm col-span-2 py-8" style="color:var(--text-muted);">No results. <a href="https://www.montgomerychamber.com/list" target="_blank" style="color:var(--accent);text-decoration:underline;">Search the full directory</a>.</p>`;
 }
 
-function updateCheckProgress(completed) {
-  const pct = Math.round((completed.length / checklistSteps.length) * 100);
-  document.getElementById('checkProgress').textContent = `${completed.length} of ${checklistSteps.length} completed`;
-  document.getElementById('checkPercent').textContent = pct + '%';
-  document.getElementById('checkBar').style.width = pct + '%';
-  document.getElementById('checklistComplete').classList.toggle('hidden', completed.length < checklistSteps.length);
+function renderDirTags(){
+  document.getElementById('dirTags').innerHTML=['Restaurant','Legal','Technology','Healthcare','Finance','Construction'].map(t=>`<button class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:var(--navy-light);color:var(--text-muted);" onclick="searchDir('${t}')">${t}</button>`).join('');
 }
 
-// ─── COUNT-UP ANIMATION ────────────────────────────────────
-function animateCounters() {
-  document.querySelectorAll('.count-up').forEach(el => {
-    const target = parseInt(el.dataset.target);
-    const duration = 1500;
-    const start = performance.now();
-    function tick(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * target).toLocaleString() + (target === 98 ? '%' : target === 2200 ? '+' : '+');
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+function renderCk(){
+  const c=JSON.parse(localStorage.getItem('mgm_ck2')||'[]');
+  document.getElementById('ckItems').innerHTML=ckSteps.map((s,i)=>{
+    const d=c.includes(i);
+    return `<div class="check-item ${d?'completed':''} flex items-start gap-4 p-4 rounded-xl cursor-pointer" style="background:var(--bg-elevated);border:1px solid var(--border);" onclick="toggleCk(${i})">
+      <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5" style="background:${d?'var(--accent)':'var(--roi-off-bg)'};color:${d?'white':'transparent'};${d?'':'border:1px solid var(--border);'}">
+        ${d?'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>':''}
+      </div>
+      <div class="flex-1">
+        <p class="check-text text-sm font-medium" style="color:var(--text-body);">${s.text}</p>
+        <p class="text-xs mt-1" style="color:var(--text-muted);">${s.tip} ${s.link?`<a href="${s.link}" target="_blank" onclick="event.stopPropagation()" style="color:var(--accent);text-decoration:underline;">Go →</a>`:''}</p>
+      </div>
+      <span class="font-mono text-xs mt-1" style="color:var(--text-faint);">${i+1}/${ckSteps.length}</span>
+    </div>`;
+  }).join('');
+  const p=Math.round((c.length/ckSteps.length)*100);
+  document.getElementById('ckProg').textContent=c.length+' of '+ckSteps.length;
+  document.getElementById('ckPct').textContent=p+'%';
+  document.getElementById('ckBar').style.width=p+'%';
+  document.getElementById('ckDone').classList.toggle('hidden',c.length<ckSteps.length);
+}
+function toggleCk(i){
+  let c=JSON.parse(localStorage.getItem('mgm_ck2')||'[]');
+  c.includes(i)?c=c.filter(x=>x!==i):c.push(i);
+  localStorage.setItem('mgm_ck2',JSON.stringify(c));renderCk();
+}
+
+// THEME
+function toggleTheme(){
+  const h=document.documentElement,n=h.getAttribute('data-theme')==='light'?'dark':'light';
+  h.setAttribute('data-theme',n);localStorage.setItem('mgm_theme',n);
+}
+function loadTheme(){
+  const s=localStorage.getItem('mgm_theme');
+  if(s)document.documentElement.setAttribute('data-theme',s);
+  else if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.documentElement.setAttribute('data-theme','dark');
+}
+
+// COUNT-UP
+function animateCounters(){
+  document.querySelectorAll('.count-up').forEach(el=>{
+    const t=+el.dataset.target,dur=1500,st=performance.now();
+    !function tick(now){
+      const p=Math.min((now-st)/dur,1),e=1-Math.pow(1-p,3);
+      el.textContent=Math.floor(e*t).toLocaleString()+(t===98?'%':'+');
+      if(p<1)requestAnimationFrame(tick);
+    }(st);
   });
 }
 
-// ─── UTILITIES ─────────────────────────────────────────────
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+function scrollToEl(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
 
-function toggleMobileMenu() {
-  const menu = document.getElementById('mobileMenu');
-  menu.classList.toggle('hidden');
-}
-
-// ─── INIT ──────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  renderROI();
-  renderBenefits();
-  renderEvents();
-  searchDirectory('');
-  renderResources();
-  renderChecklist();
-
-  // Trigger count-up when in view
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounters();
-        observer.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
-  document.querySelectorAll('.count-up').forEach(el => observer.observe(el));
+// INIT
+loadTheme();
+document.addEventListener('DOMContentLoaded',()=>{
+  renderROI();renderBen();renderQL();searchDir('');renderDirTags();renderCk();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){animateCounters();obs.disconnect();}});},{threshold:.3});
+  document.querySelectorAll('.count-up').forEach(el=>obs.observe(el));
 });
 </script>
-
 </body>
 </html>
